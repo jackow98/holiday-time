@@ -1,0 +1,2034 @@
+<!doctype html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday Time</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/_sdk/element_sdk.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Lexend', sans-serif;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-25px) translateY(5px);
+            }
+
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(251, 191, 36, 0.8);
+            }
+        }
+
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-up {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .wave-animation {
+            animation: wave 8s ease-in-out infinite;
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #fbbf24, #ffffff, #fbbf24);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+
+        .spin-slow {
+            animation: spin-slow 20s linear infinite;
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .bounce-in {
+            animation: bounce-in 0.6s ease-out forwards;
+        }
+
+        .slide-up {
+            animation: slide-up 0.5s ease-out forwards;
+        }
+
+        .fade-in {
+            animation: fade-in 0.3s ease-out forwards;
+        }
+
+        .beach-gradient {
+            background: linear-gradient(180deg,
+                    #0ea5e9 0%,
+                    #38bdf8 30%,
+                    #7dd3fc 50%,
+                    #fde68a 70%,
+                    #fbbf24 100%);
+        }
+
+        .snow-gradient {
+            background: linear-gradient(180deg,
+                    #1e3a5f 0%,
+                    #3b82f6 30%,
+                    #93c5fd 60%,
+                    #ffffff 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            transform: scale(1.05);
+        }
+
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .scrollbar-custom::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollbar-custom::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .scrollbar-custom::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #fbbf24, #f59e0b);
+            border-radius: 4px;
+        }
+
+        .logo-circle {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #0ea5e9 100%);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .destination-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 249, 195, 0.9) 100%);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: #fbbf24;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .star-rating {
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+    </style>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+    </style>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+</head>
+
+<body class="h-full overflow-auto">
+    <div id="app" class="min-h-full"><!-- Navigation -->
+        <nav id="navbar"
+            class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-blue-900/95 via-blue-800/95 to-blue-900/95 backdrop-blur-md shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 py-3">
+                <div class="flex items-center justify-between"><!-- Logo -->
+                    <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                        <div class="logo-circle w-12 h-12 rounded-full flex items-center justify-center spin-slow">
+                            <div class="bg-blue-900 w-10 h-10 rounded-full flex items-center justify-center"><span
+                                    class="text-yellow-400 font-bold text-xs text-center leading-tight">HOLIDAY<br>
+                                    TIME</span>
+                            </div>
+                        </div><span class="text-white font-bold text-xl hidden sm:block">Holiday Time</span>
+                    </div><!-- Nav Links -->
+                    <div class="flex items-center gap-6"><button onclick="navigateTo('home')"
+                            class="nav-link text-white font-semibold hover:text-yellow-400">Home</button> <button
+                            onclick="navigateTo('destinations')"
+                            class="nav-link text-white font-semibold hover:text-yellow-400">Destinations</button>
+                        <button onclick="navigateTo('airlines')"
+                            class="nav-link text-white font-semibold hover:text-yellow-400">Airlines</button> <button
+                            onclick="navigateTo('about')"
+                            class="nav-link text-white font-semibold hover:text-yellow-400">About</button> <button
+                            onclick="navigateTo('quiz')"
+                            class="btn-primary text-blue-900 font-bold px-4 py-2 rounded-full">Take Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </nav><!-- Home Section -->
+        <section id="home-section" class="min-h-full pt-20"><!-- Hero -->
+            <div class="beach-gradient min-h-screen relative overflow-hidden"><!-- Animated Background Elements -->
+                <div class="absolute inset-0 pointer-events-none">
+                    <div class="absolute top-20 left-10 text-6xl float-animation" style="animation-delay: 0s;">
+                        🌴
+                    </div>
+                    <div class="absolute top-32 right-20 text-5xl float-animation" style="animation-delay: 0.5s;">
+                        ✈️
+                    </div>
+                    <div class="absolute top-60 left-1/4 text-4xl float-animation" style="animation-delay: 1s;">
+                        🏖️
+                    </div>
+                    <div class="absolute top-40 right-1/3 text-5xl float-animation" style="animation-delay: 1.5s;">
+                        🌊
+                    </div>
+                    <div class="absolute bottom-40 left-20 text-6xl float-animation" style="animation-delay: 2s;">
+                        🐚
+                    </div>
+                    <div class="absolute bottom-60 right-10 text-5xl float-animation" style="animation-delay: 2.5s;">
+                        ⛱️
+                    </div>
+                    <div class="absolute top-1/2 left-10 text-4xl float-animation" style="animation-delay: 3s;">
+                        🦀
+                    </div>
+                    <div class="absolute top-1/3 right-10 text-5xl float-animation" style="animation-delay: 3.5s;">
+                        🌺
+                    </div>
+                </div><!-- Hero Content -->
+                <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center">
+                    <!-- Animated Logo -->
+                    <div
+                        class="logo-circle w-32 h-32 rounded-full flex items-center justify-center mb-8 pulse-glow bounce-in">
+                        <div
+                            class="bg-blue-900 w-28 h-28 rounded-full flex items-center justify-center border-4 border-yellow-300">
+                            <div class="text-center"><span
+                                    class="text-yellow-400 font-extrabold text-lg block">HOLIDAY</span> <span
+                                    class="text-white font-extrabold text-lg block">TIME</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h1 id="hero-title"
+                        class="text-5xl md:text-7xl font-extrabold text-white mb-4 drop-shadow-lg slide-up"><span
+                            class="shimmer-text">Holiday Time</span></h1>
+                    <p id="hero-tagline" class="text-xl md:text-2xl text-blue-900 font-semibold mb-8 slide-up"
+                        style="animation-delay: 0.2s;">Find Your Perfect Getaway</p>
+                    <p class="text-lg text-white/90 max-w-2xl mb-8 slide-up" style="animation-delay: 0.4s;">Whether you
+                        love beaches or mountains, hot sun or snowy peaks, budget-friendly or luxury - we'll find your
+                        dream destination!</p>
+                    <div class="flex flex-wrap gap-4 justify-center slide-up" style="animation-delay: 0.6s;"><button
+                            onclick="navigateTo('quiz')"
+                            class="btn-primary text-blue-900 font-bold px-8 py-4 rounded-full text-lg shadow-xl"> Start
+                            Your Journey </button> <button onclick="navigateTo('destinations')"
+                            class="bg-white/20 backdrop-blur-sm text-white font-bold px-8 py-4 rounded-full text-lg border-2 border-white hover:bg-white/30 transition-all">
+                            Explore Destinations </button>
+                    </div>
+                </div><!-- Scroll Indicator -->
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg><span class="text-sm font-semibold">Scroll to explore</span>
+                </div>
+            </div><!-- Popular Destinations Preview -->
+            <div class="bg-gradient-to-b from-yellow-400 to-yellow-200 py-16 px-4">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="text-4xl font-extrabold text-blue-900 text-center mb-4">Popular Destinations</h2>
+                    <p class="text-blue-800 text-center mb-12 text-lg">Click on any destination to explore!</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="popular-destinations-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div><!-- World Attractions -->
+            <div class="bg-gradient-to-b from-yellow-200 to-blue-200 py-16 px-4">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="text-4xl font-extrabold text-blue-900 text-center mb-4">World Famous Attractions</h2>
+                    <p class="text-blue-800 text-center mb-12 text-lg">Iconic landmarks waiting for you!</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4" id="attractions-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div><!-- All Countries Section -->
+            <div class="bg-gradient-to-b from-blue-200 to-blue-400 py-16 px-4">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="text-4xl font-extrabold text-white text-center mb-4 drop-shadow-lg">Explore Every Country
+                    </h2>
+                    <p class="text-white/90 text-center mb-8 text-lg">All 195 countries at your fingertips!</p>
+                    <!-- Region Tabs -->
+                    <div class="flex flex-wrap justify-center gap-2 mb-8"><button onclick="filterCountries('all')"
+                            class="region-tab bg-yellow-400 text-blue-900 px-4 py-2 rounded-full font-bold hover:bg-yellow-300 transition-all"
+                            data-region="all">All</button> <button onclick="filterCountries('europe')"
+                            class="region-tab bg-white/30 text-white px-4 py-2 rounded-full font-bold hover:bg-white/50 transition-all"
+                            data-region="europe">Europe</button> <button onclick="filterCountries('asia')"
+                            class="region-tab bg-white/30 text-white px-4 py-2 rounded-full font-bold hover:bg-white/50 transition-all"
+                            data-region="asia">Asia</button> <button onclick="filterCountries('africa')"
+                            class="region-tab bg-white/30 text-white px-4 py-2 rounded-full font-bold hover:bg-white/50 transition-all"
+                            data-region="africa">Africa</button> <button onclick="filterCountries('north-america')"
+                            class="region-tab bg-white/30 text-white px-4 py-2 rounded-full font-bold hover:bg-white/50 transition-all"
+                            data-region="north-america">North America</button> <button
+                            onclick="filterCountries('south-america')"
+                            class="region-tab bg-white/30 text-white px-4 py-2 rounded-full font-bold hover:bg-white/50 transition-all"
+                            data-region="south-america">South America</button> <button
+                            onclick="filterCountries('oceania')"
+                            class="region-tab bg-white/30 text-white px-4 py-2 rounded-full font-bold hover:bg-white/50 transition-all"
+                            data-region="oceania">Oceania</button>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 max-h-96 overflow-y-auto scrollbar-custom bg-white/10 rounded-2xl p-4"
+                        id="countries-grid"><!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section><!-- Destinations Section -->
+        <section id="destinations-section" class="hidden min-h-full pt-20 bg-gradient-to-b from-blue-500 to-yellow-300">
+            <div class="max-w-7xl mx-auto px-4 py-8">
+                <h1 class="text-4xl font-extrabold text-white text-center mb-8 drop-shadow-lg">All Destinations</h1>
+                <!-- Search & Filter -->
+                <div class="bg-white/20 backdrop-blur-md rounded-2xl p-6 mb-8">
+                    <div class="flex flex-wrap gap-4 items-center justify-center"><input type="text"
+                            id="destination-search" placeholder="Search destinations..."
+                            class="px-4 py-3 rounded-full bg-white/90 text-blue-900 font-semibold w-64 focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                            oninput="searchDestinations()"> <select id="climate-filter" onchange="filterDestinations()"
+                            class="px-4 py-3 rounded-full bg-white/90 text-blue-900 font-semibold focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                            <option value="all">All Climates</option>
+                            <option value="tropical">Tropical/Hot</option>
+                            <option value="cold">Cold/Snowy</option>
+                            <option value="temperate">Temperate</option>
+                            <option value="desert">Desert/Dry</option>
+                        </select> <select id="budget-filter" onchange="filterDestinations()"
+                            class="px-4 py-3 rounded-full bg-white/90 text-blue-900 font-semibold focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                            <option value="all">All Budgets</option>
+                            <option value="budget">Budget ($)</option>
+                            <option value="mid">Mid-Range ($$)</option>
+                            <option value="luxury">Luxury ($$$)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="destinations-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section><!-- Airlines Section -->
+        <section id="airlines-section" class="hidden min-h-full pt-20 bg-gradient-to-b from-blue-900 to-blue-500">
+            <div class="max-w-7xl mx-auto px-4 py-8">
+                <h1 class="text-4xl font-extrabold text-white text-center mb-4 drop-shadow-lg">Airlines Directory</h1>
+                <p class="text-white/80 text-center mb-8 text-lg">Find the perfect airline for your journey</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="airlines-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section><!-- About Section -->
+        <section id="about-section" class="hidden min-h-full pt-20 bg-gradient-to-b from-yellow-400 to-blue-500">
+            <div class="max-w-4xl mx-auto px-4 py-16">
+                <div class="bg-white/95 rounded-3xl shadow-2xl p-8 md:p-12">
+                    <div class="text-center mb-12">
+                        <div
+                            class="logo-circle w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 pulse-glow">
+                            <div class="bg-blue-900 w-20 h-20 rounded-full flex items-center justify-center"><span
+                                    class="text-yellow-400 font-bold text-sm text-center leading-tight">HOLIDAY<br>
+                                    TIME</span>
+                            </div>
+                        </div>
+                        <h1 class="text-4xl font-extrabold text-blue-900 mb-4">About Holiday Time</h1>
+                        <p class="text-xl text-blue-700">Your personal travel companion since 2024</p>
+                    </div>
+                    <div class="space-y-8 text-blue-900">
+                        <div class="bg-gradient-to-r from-yellow-100 to-blue-100 rounded-2xl p-6">
+                            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2"><span class="text-3xl">🎯</span>
+                                Our Mission</h2>
+                            <p class="text-lg leading-relaxed">At Holiday Time, we believe everyone deserves the perfect
+                                vacation. Our intelligent quiz system analyzes your preferences - from climate choices
+                                to budget constraints, from adventure levels to accessibility needs - to recommend
+                                destinations that truly match what you're looking for. We cater especially to travelers
+                                with special requirements, ensuring everyone can explore the world comfortably.</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-blue-100 to-yellow-100 rounded-2xl p-6">
+                            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2"><span class="text-3xl">✨</span>
+                                What Makes Us Special</h2>
+                            <ul class="space-y-3 text-lg">
+                                <li class="flex items-start gap-3"><span class="text-yellow-500 text-xl">★</span>
+                                    <span><strong>Personalized Recommendations:</strong> Our quiz matches your exact
+                                        preferences to destinations worldwide</span></li>
+                                <li class="flex items-start gap-3"><span class="text-yellow-500 text-xl">★</span>
+                                    <span><strong>Accessibility Focus:</strong> Special options for travelers with
+                                        mobility, dietary, or other requirements</span></li>
+                                <li class="flex items-start gap-3"><span class="text-yellow-500 text-xl">★</span>
+                                    <span><strong>Real Information:</strong> Actual prices, real hotels, and verified
+                                        airline details</span></li>
+                                <li class="flex items-start gap-3"><span class="text-yellow-500 text-xl">★</span>
+                                    <span><strong>Global Coverage:</strong> All 195 countries with detailed information
+                                        for each</span></li>
+                                <li class="flex items-start gap-3"><span class="text-yellow-500 text-xl">★</span>
+                                    <span><strong>Budget Options:</strong> From backpacker-friendly to luxury, we cover
+                                        all ranges</span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-gradient-to-r from-yellow-100 to-blue-100 rounded-2xl p-6">
+                            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2"><span class="text-3xl">🌍</span>
+                                How It Works</h2>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-white rounded-xl p-4 text-center shadow-lg">
+                                    <div class="text-4xl mb-2">
+                                        1️⃣
+                                    </div>
+                                    <h3 class="font-bold text-lg mb-2">Take Our Quiz</h3>
+                                    <p>Answer questions about your travel style, climate preferences, budget, and
+                                        special needs</p>
+                                </div>
+                                <div class="bg-white rounded-xl p-4 text-center shadow-lg">
+                                    <div class="text-4xl mb-2">
+                                        2️⃣
+                                    </div>
+                                    <h3 class="font-bold text-lg mb-2">Get Matched</h3>
+                                    <p>Our algorithm finds your perfect destination from 195+ countries worldwide</p>
+                                </div>
+                                <div class="bg-white rounded-xl p-4 text-center shadow-lg">
+                                    <div class="text-4xl mb-2">
+                                        3️⃣
+                                    </div>
+                                    <h3 class="font-bold text-lg mb-2">Plan &amp; Book</h3>
+                                    <p>Get detailed info on hotels, attractions, airlines, and local tips</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-blue-100 to-yellow-100 rounded-2xl p-6">
+                            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2"><span class="text-3xl">♿</span>
+                                Accessibility Commitment</h2>
+                            <p class="text-lg leading-relaxed mb-4">We understand that traveling with special
+                                requirements needs extra planning. That's why Holiday Time provides:</p>
+                            <ul class="space-y-2 text-lg">
+                                <li>• Wheelchair-accessible hotel recommendations</li>
+                                <li>• Information on destinations with good medical facilities</li>
+                                <li>• Dietary-friendly restaurant suggestions</li>
+                                <li>• Family-friendly activity options</li>
+                                <li>• Dyslexia-friendly fonts throughout our website</li>
+                                <li>• Clear, readable layouts with high contrast</li>
+                            </ul>
+                        </div>
+                        <div class="text-center pt-8"><button onclick="navigateTo('quiz')"
+                                class="btn-primary text-blue-900 font-bold px-10 py-4 rounded-full text-xl shadow-xl">
+                                Start Your Adventure Now! </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- Quiz Section -->
+        <section id="quiz-section" class="hidden min-h-full pt-20">
+            <div id="quiz-container" class="min-h-screen beach-gradient">
+                <div class="max-w-3xl mx-auto px-4 py-8"><!-- Quiz Progress -->
+                    <div class="bg-white/20 backdrop-blur-md rounded-full p-2 mb-8">
+                        <div class="flex items-center justify-between text-white font-semibold px-4"><span>Question
+                                <span id="current-question">1</span> of <span id="total-questions">10</span></span>
+                            <div class="flex-1 mx-4 bg-white/30 rounded-full h-3">
+                                <div id="progress-bar"
+                                    class="bg-yellow-400 h-3 rounded-full transition-all duration-500"
+                                    style="width: 10%"></div>
+                            </div>
+                        </div>
+                    </div><!-- Quiz Card -->
+                    <div id="quiz-card" class="bg-white/95 rounded-3xl shadow-2xl p-8 md:p-12">
+                        <div id="quiz-content"><!-- Quiz questions populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div><!-- Results Container -->
+            <div id="results-container" class="hidden min-h-screen bg-gradient-to-b from-blue-500 to-yellow-400">
+                <div class="max-w-4xl mx-auto px-4 py-8">
+                    <div id="results-content" class="bg-white/95 rounded-3xl shadow-2xl p-8 md:p-12">
+                        <!-- Results populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section><!-- Modal for Details -->
+        <div id="detail-modal" class="hidden fixed inset-0 z-50 modal-overlay flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90%] overflow-hidden">
+                <div id="modal-content" class="overflow-y-auto scrollbar-custom h-full">
+                    <!-- Modal content populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Configuration
+        const defaultConfig = {
+            site_title: 'Holiday Time',
+            tagline: 'Find Your Perfect Getaway',
+            primary_color: '#fbbf24',
+            secondary_color: '#0ea5e9',
+            text_color: '#1e3a5f',
+            bg_color: '#fef9c3',
+            accent_color: '#f59e0b'
+        };
+
+        let config = { ...defaultConfig };
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange: async (newConfig) => {
+                    config = { ...config, ...newConfig };
+                    updateUI();
+                },
+                mapToCapabilities: (cfg) => ({
+                    recolorables: [
+                        { get: () => cfg.bg_color || defaultConfig.bg_color, set: (v) => { cfg.bg_color = v; window.elementSdk.setConfig({ bg_color: v }); } },
+                        { get: () => cfg.secondary_color || defaultConfig.secondary_color, set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } },
+                        { get: () => cfg.text_color || defaultConfig.text_color, set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+                        { get: () => cfg.primary_color || defaultConfig.primary_color, set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
+                        { get: () => cfg.accent_color || defaultConfig.accent_color, set: (v) => { cfg.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } }
+                    ],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (cfg) => new Map([
+                    ['site_title', cfg.site_title || defaultConfig.site_title],
+                    ['tagline', cfg.tagline || defaultConfig.tagline]
+                ])
+            });
+        }
+
+        function updateUI() {
+            const title = document.getElementById('hero-title');
+            const tagline = document.getElementById('hero-tagline');
+            if (title) title.querySelector('.shimmer-text').textContent = config.site_title || defaultConfig.site_title;
+            if (tagline) tagline.textContent = config.tagline || defaultConfig.tagline;
+        }
+
+        // Comprehensive destination data - EVERY country represented
+        const allCountries = [
+            // Europe
+            { name: 'France', flag: '🇫🇷', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Paris' },
+            { name: 'Italy', flag: '🇮🇹', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Rome' },
+            { name: 'Spain', flag: '🇪🇸', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Madrid' },
+            { name: 'Germany', flag: '🇩🇪', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Berlin' },
+            { name: 'United Kingdom', flag: '🇬🇧', region: 'europe', climate: 'cold', budget: 'luxury', capital: 'London' },
+            { name: 'Greece', flag: '🇬🇷', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Athens' },
+            { name: 'Portugal', flag: '🇵🇹', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Lisbon' },
+            { name: 'Netherlands', flag: '🇳🇱', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Amsterdam' },
+            { name: 'Switzerland', flag: '🇨🇭', region: 'europe', climate: 'cold', budget: 'luxury', capital: 'Bern' },
+            { name: 'Austria', flag: '🇦🇹', region: 'europe', climate: 'cold', budget: 'mid', capital: 'Vienna' },
+            { name: 'Belgium', flag: '🇧🇪', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Brussels' },
+            { name: 'Sweden', flag: '🇸🇪', region: 'europe', climate: 'cold', budget: 'luxury', capital: 'Stockholm' },
+            { name: 'Norway', flag: '🇳🇴', region: 'europe', climate: 'cold', budget: 'luxury', capital: 'Oslo' },
+            { name: 'Denmark', flag: '🇩🇰', region: 'europe', climate: 'cold', budget: 'luxury', capital: 'Copenhagen' },
+            { name: 'Finland', flag: '🇫🇮', region: 'europe', climate: 'cold', budget: 'luxury', capital: 'Helsinki' },
+            { name: 'Ireland', flag: '🇮🇪', region: 'europe', climate: 'cold', budget: 'mid', capital: 'Dublin' },
+            { name: 'Poland', flag: '🇵🇱', region: 'europe', climate: 'cold', budget: 'budget', capital: 'Warsaw' },
+            { name: 'Czech Republic', flag: '🇨🇿', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Prague' },
+            { name: 'Hungary', flag: '🇭🇺', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Budapest' },
+            { name: 'Croatia', flag: '🇭🇷', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Zagreb' },
+            { name: 'Romania', flag: '🇷🇴', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Bucharest' },
+            { name: 'Bulgaria', flag: '🇧🇬', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Sofia' },
+            { name: 'Slovenia', flag: '🇸🇮', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Ljubljana' },
+            { name: 'Slovakia', flag: '🇸🇰', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Bratislava' },
+            { name: 'Iceland', flag: '🇮🇸', region: 'europe', climate: 'cold', budget: 'luxury', capital: 'Reykjavik' },
+            { name: 'Luxembourg', flag: '🇱🇺', region: 'europe', climate: 'temperate', budget: 'luxury', capital: 'Luxembourg City' },
+            { name: 'Malta', flag: '🇲🇹', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Valletta' },
+            { name: 'Cyprus', flag: '🇨🇾', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'Nicosia' },
+            { name: 'Estonia', flag: '🇪🇪', region: 'europe', climate: 'cold', budget: 'budget', capital: 'Tallinn' },
+            { name: 'Latvia', flag: '🇱🇻', region: 'europe', climate: 'cold', budget: 'budget', capital: 'Riga' },
+            { name: 'Lithuania', flag: '🇱🇹', region: 'europe', climate: 'cold', budget: 'budget', capital: 'Vilnius' },
+            { name: 'Serbia', flag: '🇷🇸', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Belgrade' },
+            { name: 'Montenegro', flag: '🇲🇪', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Podgorica' },
+            { name: 'Albania', flag: '🇦🇱', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Tirana' },
+            { name: 'North Macedonia', flag: '🇲🇰', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Skopje' },
+            { name: 'Bosnia and Herzegovina', flag: '🇧🇦', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Sarajevo' },
+            { name: 'Moldova', flag: '🇲🇩', region: 'europe', climate: 'temperate', budget: 'budget', capital: 'Chisinau' },
+            { name: 'Ukraine', flag: '🇺🇦', region: 'europe', climate: 'cold', budget: 'budget', capital: 'Kyiv' },
+            { name: 'Belarus', flag: '🇧🇾', region: 'europe', climate: 'cold', budget: 'budget', capital: 'Minsk' },
+            { name: 'Monaco', flag: '🇲🇨', region: 'europe', climate: 'temperate', budget: 'luxury', capital: 'Monaco' },
+            { name: 'Andorra', flag: '🇦🇩', region: 'europe', climate: 'cold', budget: 'mid', capital: 'Andorra la Vella' },
+            { name: 'Liechtenstein', flag: '🇱🇮', region: 'europe', climate: 'cold', budget: 'luxury', capital: 'Vaduz' },
+            { name: 'San Marino', flag: '🇸🇲', region: 'europe', climate: 'temperate', budget: 'mid', capital: 'San Marino' },
+
+            // Asia
+            { name: 'Japan', flag: '🇯🇵', region: 'asia', climate: 'temperate', budget: 'luxury', capital: 'Tokyo' },
+            { name: 'Thailand', flag: '🇹🇭', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'Bangkok' },
+            { name: 'Vietnam', flag: '🇻🇳', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'Hanoi' },
+            { name: 'Indonesia', flag: '🇮🇩', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'Jakarta' },
+            { name: 'Malaysia', flag: '🇲🇾', region: 'asia', climate: 'tropical', budget: 'mid', capital: 'Kuala Lumpur' },
+            { name: 'Singapore', flag: '🇸🇬', region: 'asia', climate: 'tropical', budget: 'luxury', capital: 'Singapore' },
+            { name: 'Philippines', flag: '🇵🇭', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'Manila' },
+            { name: 'South Korea', flag: '🇰🇷', region: 'asia', climate: 'temperate', budget: 'mid', capital: 'Seoul' },
+            { name: 'China', flag: '🇨🇳', region: 'asia', climate: 'temperate', budget: 'mid', capital: 'Beijing' },
+            { name: 'India', flag: '🇮🇳', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'New Delhi' },
+            { name: 'Nepal', flag: '🇳🇵', region: 'asia', climate: 'cold', budget: 'budget', capital: 'Kathmandu' },
+            { name: 'Sri Lanka', flag: '🇱🇰', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'Colombo' },
+            { name: 'Maldives', flag: '🇲🇻', region: 'asia', climate: 'tropical', budget: 'luxury', capital: 'Malé' },
+            { name: 'Cambodia', flag: '🇰🇭', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'Phnom Penh' },
+            { name: 'Laos', flag: '🇱🇦', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'Vientiane' },
+            { name: 'Myanmar', flag: '🇲🇲', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'Naypyidaw' },
+            { name: 'Bangladesh', flag: '🇧🇩', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'Dhaka' },
+            { name: 'Pakistan', flag: '🇵🇰', region: 'asia', climate: 'desert', budget: 'budget', capital: 'Islamabad' },
+            { name: 'Afghanistan', flag: '🇦🇫', region: 'asia', climate: 'desert', budget: 'budget', capital: 'Kabul' },
+            { name: 'Bhutan', flag: '🇧🇹', region: 'asia', climate: 'cold', budget: 'luxury', capital: 'Thimphu' },
+            { name: 'Mongolia', flag: '🇲🇳', region: 'asia', climate: 'cold', budget: 'budget', capital: 'Ulaanbaatar' },
+            { name: 'Taiwan', flag: '🇹🇼', region: 'asia', climate: 'tropical', budget: 'mid', capital: 'Taipei' },
+            { name: 'Brunei', flag: '🇧🇳', region: 'asia', climate: 'tropical', budget: 'mid', capital: 'Bandar Seri Begawan' },
+            { name: 'Timor-Leste', flag: '🇹🇱', region: 'asia', climate: 'tropical', budget: 'budget', capital: 'Dili' },
+
+            // Middle East
+            { name: 'United Arab Emirates', flag: '🇦🇪', region: 'asia', climate: 'desert', budget: 'luxury', capital: 'Abu Dhabi' },
+            { name: 'Saudi Arabia', flag: '🇸🇦', region: 'asia', climate: 'desert', budget: 'mid', capital: 'Riyadh' },
+            { name: 'Qatar', flag: '🇶🇦', region: 'asia', climate: 'desert', budget: 'luxury', capital: 'Doha' },
+            { name: 'Oman', flag: '🇴🇲', region: 'asia', climate: 'desert', budget: 'mid', capital: 'Muscat' },
+            { name: 'Kuwait', flag: '🇰🇼', region: 'asia', climate: 'desert', budget: 'mid', capital: 'Kuwait City' },
+            { name: 'Bahrain', flag: '🇧🇭', region: 'asia', climate: 'desert', budget: 'mid', capital: 'Manama' },
+            { name: 'Jordan', flag: '🇯🇴', region: 'asia', climate: 'desert', budget: 'mid', capital: 'Amman' },
+            { name: 'Lebanon', flag: '🇱🇧', region: 'asia', climate: 'temperate', budget: 'mid', capital: 'Beirut' },
+            { name: 'Israel', flag: '🇮🇱', region: 'asia', climate: 'desert', budget: 'luxury', capital: 'Jerusalem' },
+            { name: 'Turkey', flag: '🇹🇷', region: 'asia', climate: 'temperate', budget: 'mid', capital: 'Ankara' },
+            { name: 'Iran', flag: '🇮🇷', region: 'asia', climate: 'desert', budget: 'budget', capital: 'Tehran' },
+            { name: 'Iraq', flag: '🇮🇶', region: 'asia', climate: 'desert', budget: 'budget', capital: 'Baghdad' },
+            { name: 'Syria', flag: '🇸🇾', region: 'asia', climate: 'desert', budget: 'budget', capital: 'Damascus' },
+            { name: 'Yemen', flag: '🇾🇪', region: 'asia', climate: 'desert', budget: 'budget', capital: 'Sanaa' },
+
+            // Central Asia
+            { name: 'Kazakhstan', flag: '🇰🇿', region: 'asia', climate: 'cold', budget: 'budget', capital: 'Astana' },
+            { name: 'Uzbekistan', flag: '🇺🇿', region: 'asia', climate: 'desert', budget: 'budget', capital: 'Tashkent' },
+            { name: 'Turkmenistan', flag: '🇹🇲', region: 'asia', climate: 'desert', budget: 'budget', capital: 'Ashgabat' },
+            { name: 'Tajikistan', flag: '🇹🇯', region: 'asia', climate: 'cold', budget: 'budget', capital: 'Dushanbe' },
+            { name: 'Kyrgyzstan', flag: '🇰🇬', region: 'asia', climate: 'cold', budget: 'budget', capital: 'Bishkek' },
+            { name: 'Georgia', flag: '🇬🇪', region: 'asia', climate: 'temperate', budget: 'budget', capital: 'Tbilisi' },
+            { name: 'Armenia', flag: '🇦🇲', region: 'asia', climate: 'temperate', budget: 'budget', capital: 'Yerevan' },
+            { name: 'Azerbaijan', flag: '🇦🇿', region: 'asia', climate: 'temperate', budget: 'budget', capital: 'Baku' },
+
+            // Africa
+            { name: 'Egypt', flag: '🇪🇬', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Cairo' },
+            { name: 'Morocco', flag: '🇲🇦', region: 'africa', climate: 'desert', budget: 'mid', capital: 'Rabat' },
+            { name: 'South Africa', flag: '🇿🇦', region: 'africa', climate: 'temperate', budget: 'mid', capital: 'Pretoria' },
+            { name: 'Kenya', flag: '🇰🇪', region: 'africa', climate: 'tropical', budget: 'mid', capital: 'Nairobi' },
+            { name: 'Tanzania', flag: '🇹🇿', region: 'africa', climate: 'tropical', budget: 'mid', capital: 'Dodoma' },
+            { name: 'Ethiopia', flag: '🇪🇹', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Addis Ababa' },
+            { name: 'Nigeria', flag: '🇳🇬', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Abuja' },
+            { name: 'Ghana', flag: '🇬🇭', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Accra' },
+            { name: 'Senegal', flag: '🇸🇳', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Dakar' },
+            { name: 'Tunisia', flag: '🇹🇳', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Tunis' },
+            { name: 'Algeria', flag: '🇩🇿', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Algiers' },
+            { name: 'Libya', flag: '🇱🇾', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Tripoli' },
+            { name: 'Sudan', flag: '🇸🇩', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Khartoum' },
+            { name: 'Uganda', flag: '🇺🇬', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Kampala' },
+            { name: 'Rwanda', flag: '🇷🇼', region: 'africa', climate: 'tropical', budget: 'mid', capital: 'Kigali' },
+            { name: 'Botswana', flag: '🇧🇼', region: 'africa', climate: 'desert', budget: 'luxury', capital: 'Gaborone' },
+            { name: 'Namibia', flag: '🇳🇦', region: 'africa', climate: 'desert', budget: 'mid', capital: 'Windhoek' },
+            { name: 'Zimbabwe', flag: '🇿🇼', region: 'africa', climate: 'tropical', budget: 'mid', capital: 'Harare' },
+            { name: 'Zambia', flag: '🇿🇲', region: 'africa', climate: 'tropical', budget: 'mid', capital: 'Lusaka' },
+            { name: 'Madagascar', flag: '🇲🇬', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Antananarivo' },
+            { name: 'Mauritius', flag: '🇲🇺', region: 'africa', climate: 'tropical', budget: 'luxury', capital: 'Port Louis' },
+            { name: 'Seychelles', flag: '🇸🇨', region: 'africa', climate: 'tropical', budget: 'luxury', capital: 'Victoria' },
+            { name: 'Cape Verde', flag: '🇨🇻', region: 'africa', climate: 'tropical', budget: 'mid', capital: 'Praia' },
+            { name: 'Mozambique', flag: '🇲🇿', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Maputo' },
+            { name: 'Malawi', flag: '🇲🇼', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Lilongwe' },
+            { name: 'Angola', flag: '🇦🇴', region: 'africa', climate: 'tropical', budget: 'mid', capital: 'Luanda' },
+            { name: 'Democratic Republic of Congo', flag: '🇨🇩', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Kinshasa' },
+            { name: 'Republic of Congo', flag: '🇨🇬', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Brazzaville' },
+            { name: 'Cameroon', flag: '🇨🇲', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Yaoundé' },
+            { name: 'Ivory Coast', flag: '🇨🇮', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Yamoussoukro' },
+            { name: 'Mali', flag: '🇲🇱', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Bamako' },
+            { name: 'Burkina Faso', flag: '🇧🇫', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Ouagadougou' },
+            { name: 'Niger', flag: '🇳🇪', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Niamey' },
+            { name: 'Chad', flag: '🇹🇩', region: 'africa', climate: 'desert', budget: 'budget', capital: "N'Djamena" },
+            { name: 'Mauritania', flag: '🇲🇷', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Nouakchott' },
+            { name: 'Gambia', flag: '🇬🇲', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Banjul' },
+            { name: 'Guinea', flag: '🇬🇳', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Conakry' },
+            { name: 'Sierra Leone', flag: '🇸🇱', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Freetown' },
+            { name: 'Liberia', flag: '🇱🇷', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Monrovia' },
+            { name: 'Togo', flag: '🇹🇬', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Lomé' },
+            { name: 'Benin', flag: '🇧🇯', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Porto-Novo' },
+            { name: 'Gabon', flag: '🇬🇦', region: 'africa', climate: 'tropical', budget: 'mid', capital: 'Libreville' },
+            { name: 'Equatorial Guinea', flag: '🇬🇶', region: 'africa', climate: 'tropical', budget: 'mid', capital: 'Malabo' },
+            { name: 'Central African Republic', flag: '🇨🇫', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Bangui' },
+            { name: 'South Sudan', flag: '🇸🇸', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Juba' },
+            { name: 'Eritrea', flag: '🇪🇷', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Asmara' },
+            { name: 'Djibouti', flag: '🇩🇯', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Djibouti City' },
+            { name: 'Somalia', flag: '🇸🇴', region: 'africa', climate: 'desert', budget: 'budget', capital: 'Mogadishu' },
+            { name: 'Burundi', flag: '🇧🇮', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Gitega' },
+            { name: 'Comoros', flag: '🇰🇲', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Moroni' },
+            { name: 'Eswatini', flag: '🇸🇿', region: 'africa', climate: 'temperate', budget: 'budget', capital: 'Mbabane' },
+            { name: 'Lesotho', flag: '🇱🇸', region: 'africa', climate: 'cold', budget: 'budget', capital: 'Maseru' },
+            { name: 'Guinea-Bissau', flag: '🇬🇼', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'Bissau' },
+            { name: 'São Tomé and Príncipe', flag: '🇸🇹', region: 'africa', climate: 'tropical', budget: 'budget', capital: 'São Tomé' },
+
+            // North America
+            { name: 'United States', flag: '🇺🇸', region: 'north-america', climate: 'temperate', budget: 'mid', capital: 'Washington D.C.' },
+            { name: 'Canada', flag: '🇨🇦', region: 'north-america', climate: 'cold', budget: 'mid', capital: 'Ottawa' },
+            { name: 'Mexico', flag: '🇲🇽', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'Mexico City' },
+            { name: 'Cuba', flag: '🇨🇺', region: 'north-america', climate: 'tropical', budget: 'budget', capital: 'Havana' },
+            { name: 'Jamaica', flag: '🇯🇲', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'Kingston' },
+            { name: 'Haiti', flag: '🇭🇹', region: 'north-america', climate: 'tropical', budget: 'budget', capital: 'Port-au-Prince' },
+            { name: 'Dominican Republic', flag: '🇩🇴', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'Santo Domingo' },
+            { name: 'Bahamas', flag: '🇧🇸', region: 'north-america', climate: 'tropical', budget: 'luxury', capital: 'Nassau' },
+            { name: 'Barbados', flag: '🇧🇧', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'Bridgetown' },
+            { name: 'Trinidad and Tobago', flag: '🇹🇹', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'Port of Spain' },
+            { name: 'Guatemala', flag: '🇬🇹', region: 'north-america', climate: 'tropical', budget: 'budget', capital: 'Guatemala City' },
+            { name: 'Belize', flag: '🇧🇿', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'Belmopan' },
+            { name: 'El Salvador', flag: '🇸🇻', region: 'north-america', climate: 'tropical', budget: 'budget', capital: 'San Salvador' },
+            { name: 'Honduras', flag: '🇭🇳', region: 'north-america', climate: 'tropical', budget: 'budget', capital: 'Tegucigalpa' },
+            { name: 'Nicaragua', flag: '🇳🇮', region: 'north-america', climate: 'tropical', budget: 'budget', capital: 'Managua' },
+            { name: 'Costa Rica', flag: '🇨🇷', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'San José' },
+            { name: 'Panama', flag: '🇵🇦', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'Panama City' },
+            { name: 'Grenada', flag: '🇬🇩', region: 'north-america', climate: 'tropical', budget: 'mid', capital: "St. George's" },
+            { name: 'Saint Lucia', flag: '🇱🇨', region: 'north-america', climate: 'tropical', budget: 'luxury', capital: 'Castries' },
+            { name: 'Saint Vincent and the Grenadines', flag: '🇻🇨', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'Kingstown' },
+            { name: 'Antigua and Barbuda', flag: '🇦🇬', region: 'north-america', climate: 'tropical', budget: 'luxury', capital: "St. John's" },
+            { name: 'Dominica', flag: '🇩🇲', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'Roseau' },
+            { name: 'Saint Kitts and Nevis', flag: '🇰🇳', region: 'north-america', climate: 'tropical', budget: 'mid', capital: 'Basseterre' },
+
+            // South America
+            { name: 'Brazil', flag: '🇧🇷', region: 'south-america', climate: 'tropical', budget: 'mid', capital: 'Brasília' },
+            { name: 'Argentina', flag: '🇦🇷', region: 'south-america', climate: 'temperate', budget: 'mid', capital: 'Buenos Aires' },
+            { name: 'Peru', flag: '🇵🇪', region: 'south-america', climate: 'temperate', budget: 'budget', capital: 'Lima' },
+            { name: 'Chile', flag: '🇨🇱', region: 'south-america', climate: 'temperate', budget: 'mid', capital: 'Santiago' },
+            { name: 'Colombia', flag: '🇨🇴', region: 'south-america', climate: 'tropical', budget: 'budget', capital: 'Bogotá' },
+            { name: 'Ecuador', flag: '🇪🇨', region: 'south-america', climate: 'tropical', budget: 'budget', capital: 'Quito' },
+            { name: 'Bolivia', flag: '🇧🇴', region: 'south-america', climate: 'cold', budget: 'budget', capital: 'Sucre' },
+            { name: 'Venezuela', flag: '🇻🇪', region: 'south-america', climate: 'tropical', budget: 'budget', capital: 'Caracas' },
+            { name: 'Uruguay', flag: '🇺🇾', region: 'south-america', climate: 'temperate', budget: 'mid', capital: 'Montevideo' },
+            { name: 'Paraguay', flag: '🇵🇾', region: 'south-america', climate: 'tropical', budget: 'budget', capital: 'Asunción' },
+            { name: 'Guyana', flag: '🇬🇾', region: 'south-america', climate: 'tropical', budget: 'budget', capital: 'Georgetown' },
+            { name: 'Suriname', flag: '🇸🇷', region: 'south-america', climate: 'tropical', budget: 'budget', capital: 'Paramaribo' },
+
+            // Oceania
+            { name: 'Australia', flag: '🇦🇺', region: 'oceania', climate: 'tropical', budget: 'luxury', capital: 'Canberra' },
+            { name: 'New Zealand', flag: '🇳🇿', region: 'oceania', climate: 'temperate', budget: 'mid', capital: 'Wellington' },
+            { name: 'Fiji', flag: '🇫🇯', region: 'oceania', climate: 'tropical', budget: 'mid', capital: 'Suva' },
+            { name: 'Papua New Guinea', flag: '🇵🇬', region: 'oceania', climate: 'tropical', budget: 'budget', capital: 'Port Moresby' },
+            { name: 'Samoa', flag: '🇼🇸', region: 'oceania', climate: 'tropical', budget: 'mid', capital: 'Apia' },
+            { name: 'Tonga', flag: '🇹🇴', region: 'oceania', climate: 'tropical', budget: 'mid', capital: "Nuku'alofa" },
+            { name: 'Vanuatu', flag: '🇻🇺', region: 'oceania', climate: 'tropical', budget: 'mid', capital: 'Port Vila' },
+            { name: 'Solomon Islands', flag: '🇸🇧', region: 'oceania', climate: 'tropical', budget: 'budget', capital: 'Honiara' },
+            { name: 'Kiribati', flag: '🇰🇮', region: 'oceania', climate: 'tropical', budget: 'budget', capital: 'Tarawa' },
+            { name: 'Micronesia', flag: '🇫🇲', region: 'oceania', climate: 'tropical', budget: 'budget', capital: 'Palikir' },
+            { name: 'Marshall Islands', flag: '🇲🇭', region: 'oceania', climate: 'tropical', budget: 'mid', capital: 'Majuro' },
+            { name: 'Palau', flag: '🇵🇼', region: 'oceania', climate: 'tropical', budget: 'luxury', capital: 'Ngerulmud' },
+            { name: 'Nauru', flag: '🇳🇷', region: 'oceania', climate: 'tropical', budget: 'budget', capital: 'Yaren' },
+            { name: 'Tuvalu', flag: '🇹🇻', region: 'oceania', climate: 'tropical', budget: 'budget', capital: 'Funafuti' }
+        ];
+
+        // Popular destinations with detailed info
+        const popularDestinations = [
+            {
+                id: 'paris',
+                name: 'Paris, France',
+                country: 'France',
+                flag: '🇫🇷',
+                image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800',
+                description: 'The City of Light captivates visitors with its iconic Eiffel Tower, world-class museums, charming cafés, and romantic atmosphere. Paris is a global center for art, fashion, gastronomy, and culture.',
+                climate: 'temperate',
+                budget: 'mid',
+                avgTemp: '12°C',
+                bestTime: 'April - June, September - October',
+                language: 'French',
+                currency: 'Euro (€)',
+                attractions: ['Eiffel Tower - €26-€70', 'Louvre Museum - €17', 'Notre-Dame Cathedral - Free', 'Arc de Triomphe - €13', 'Sacré-Cœur - Free', 'Palace of Versailles - €20'],
+                hotels: [
+                    { name: 'Hotel Le Marais', price: '$80/night', rating: 3, type: 'Budget' },
+                    { name: 'Hotel de Ville', price: '$150/night', rating: 4, type: 'Mid-Range' },
+                    { name: 'The Ritz Paris', price: '$1,200/night', rating: 5, type: 'Luxury' }
+                ],
+                restaurants: [
+                    { name: 'Le Comptoir', cuisine: 'French Bistro', price: '$25-40' },
+                    { name: 'Café de Flore', cuisine: 'Café', price: '$15-30' },
+                    { name: "L'Ambroisie", cuisine: 'Fine Dining', price: '$200+' }
+                ],
+                activities: ['River Seine cruise', 'Montmartre walking tour', 'Wine tasting', 'Shopping at Champs-Élysées']
+            },
+            {
+                id: 'tokyo',
+                name: 'Tokyo, Japan',
+                country: 'Japan',
+                flag: '🇯🇵',
+                image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800',
+                description: 'A dazzling blend of ultra-modern and traditional, Tokyo offers ancient temples alongside neon-lit skyscrapers, world-renowned cuisine, and cutting-edge technology.',
+                climate: 'temperate',
+                budget: 'luxury',
+                avgTemp: '16°C',
+                bestTime: 'March - May, September - November',
+                language: 'Japanese',
+                currency: 'Japanese Yen (¥)',
+                attractions: ['Senso-ji Temple - Free', 'Tokyo Skytree - ¥2,100', 'Meiji Shrine - Free', 'Imperial Palace - Free (gardens)', 'Shibuya Crossing - Free', 'TeamLab Borderless - ¥3,200'],
+                hotels: [
+                    { name: 'Sakura Hotel', price: '$60/night', rating: 3, type: 'Budget' },
+                    { name: 'Hotel Gracery Shinjuku', price: '$180/night', rating: 4, type: 'Mid-Range' },
+                    { name: 'Aman Tokyo', price: '$1,500/night', rating: 5, type: 'Luxury' }
+                ],
+                restaurants: [
+                    { name: 'Ichiran Ramen', cuisine: 'Ramen', price: '$10-15' },
+                    { name: 'Sushi Dai', cuisine: 'Sushi', price: '$40-80' },
+                    { name: 'Sukiyabashi Jiro', cuisine: 'Omakase', price: '$300+' }
+                ],
+                activities: ['Cherry blossom viewing', 'Sumo wrestling', 'Anime tours', 'Tea ceremony']
+            },
+            {
+                id: 'bali',
+                name: 'Bali, Indonesia',
+                country: 'Indonesia',
+                flag: '🇮🇩',
+                image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800',
+                description: 'This Indonesian paradise offers stunning beaches, ancient temples, lush rice terraces, and a spiritual atmosphere. Perfect for relaxation and adventure.',
+                climate: 'tropical',
+                budget: 'budget',
+                avgTemp: '27°C',
+                bestTime: 'April - October',
+                language: 'Indonesian',
+                currency: 'Indonesian Rupiah (IDR)',
+                attractions: ['Uluwatu Temple - IDR 50,000', 'Tegallalang Rice Terraces - IDR 15,000', 'Tirta Empul Temple - IDR 50,000', 'Sacred Monkey Forest - IDR 80,000', 'Tanah Lot Temple - IDR 60,000'],
+                hotels: [
+                    { name: 'Puri Garden Hotel', price: '$30/night', rating: 3, type: 'Budget' },
+                    { name: 'Alila Ubud', price: '$200/night', rating: 4, type: 'Mid-Range' },
+                    { name: 'Four Seasons Bali', price: '$800/night', rating: 5, type: 'Luxury' }
+                ],
+                restaurants: [
+                    { name: 'Warung Babi Guling', cuisine: 'Balinese', price: '$5-10' },
+                    { name: 'Locavore', cuisine: 'Contemporary', price: '$100+' },
+                    { name: 'Sardine', cuisine: 'Seafood', price: '$30-50' }
+                ],
+                activities: ['Surfing lessons', 'Yoga retreats', 'Waterfall hiking', 'Snorkeling']
+            },
+            {
+                id: 'newyork',
+                name: 'New York City, USA',
+                country: 'United States',
+                flag: '🇺🇸',
+                image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800',
+                description: 'The city that never sleeps offers world-famous landmarks, Broadway shows, diverse neighborhoods, and endless entertainment options.',
+                climate: 'temperate',
+                budget: 'luxury',
+                avgTemp: '13°C',
+                bestTime: 'April - June, September - November',
+                language: 'English',
+                currency: 'US Dollar ($)',
+                attractions: ['Statue of Liberty - $24', 'Empire State Building - $44', 'Central Park - Free', 'Metropolitan Museum - $30', 'Times Square - Free', 'Brooklyn Bridge - Free'],
+                hotels: [
+                    { name: 'Pod 51 Hotel', price: '$100/night', rating: 3, type: 'Budget' },
+                    { name: 'The Standard High Line', price: '$350/night', rating: 4, type: 'Mid-Range' },
+                    { name: 'The Plaza', price: '$900/night', rating: 5, type: 'Luxury' }
+                ],
+                restaurants: [
+                    { name: "Joe's Pizza", cuisine: 'Pizza', price: '$5-15' },
+                    { name: "Katz's Delicatessen", cuisine: 'Deli', price: '$20-30' },
+                    { name: 'Eleven Madison Park', cuisine: 'Fine Dining', price: '$335+' }
+                ],
+                activities: ['Broadway shows', 'Museum hopping', 'Shopping on Fifth Avenue', 'Staten Island Ferry']
+            }
+        ];
+
+        // World famous attractions data
+        const worldAttractions = [
+            { name: 'Eiffel Tower', location: 'Paris, France', icon: '🗼', price: '€26-€70', description: 'Iconic iron lattice tower on the Champ de Mars, symbol of Paris and France. Offers stunning views from three levels.' },
+            { name: 'Great Wall of China', location: 'China', icon: '🏯', price: '¥40-60', description: 'Ancient series of walls spanning over 13,000 miles, built to protect Chinese states from invasions.' },
+            { name: 'Machu Picchu', location: 'Peru', icon: '🏔️', price: '$50', description: '15th-century Inca citadel set high in the Andes Mountains, a UNESCO World Heritage site.' },
+            { name: 'Colosseum', location: 'Rome, Italy', icon: '🏟️', price: '€16', description: 'Ancient amphitheater that once hosted gladiatorial contests, the largest ever built.' },
+            { name: 'Taj Mahal', location: 'Agra, India', icon: '🕌', price: '₹50-1100', description: 'Ivory-white marble mausoleum built by Mughal emperor Shah Jahan for his wife Mumtaz Mahal.' },
+            { name: 'Statue of Liberty', location: 'New York, USA', icon: '🗽', price: '$24', description: 'Colossal neoclassical sculpture on Liberty Island, a gift from France symbolizing freedom.' },
+            { name: 'Christ the Redeemer', location: 'Rio de Janeiro, Brazil', icon: '✝️', price: 'R$45-80', description: 'Art Deco statue of Jesus Christ atop Corcovado mountain, one of the New Seven Wonders.' },
+            { name: 'Petra', location: 'Jordan', icon: '🏛️', price: '50 JOD', description: 'Ancient city carved into rose-red cliffs, famous for its rock-cut architecture.' },
+            { name: 'Great Pyramid of Giza', location: 'Egypt', icon: '⛰️', price: 'EGP 200', description: 'Oldest and largest of the three pyramids, the only remaining Wonder of the Ancient World.' },
+            { name: 'Sydney Opera House', location: 'Australia', icon: '🎭', price: 'AUD 43', description: 'Distinctive sail-shaped performing arts center, a UNESCO World Heritage site.' }
+        ];
+
+        // Comprehensive airlines data
+        const airlines = [
+            {
+                id: 'emirates',
+                name: 'Emirates',
+                logo: '🛩️',
+                country: 'United Arab Emirates',
+                flag: '🇦🇪',
+                rating: 5,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Dubai International Airport',
+                description: 'Emirates is one of the world\'s largest and most awarded airlines. Known for luxurious amenities, excellent service, and connecting over 150 destinations worldwide. Their A380 fleet offers onboard showers and bars in First Class.',
+                features: ['Free checked baggage', 'Award-winning entertainment', 'Gourmet cuisine', 'Chauffeur service', 'Onboard lounge'],
+                destinations: ['150+ destinations across 80+ countries'],
+                classOptions: ['Economy', 'Premium Economy', 'Business', 'First Class'],
+                avgPrice: '$800-$15,000'
+            },
+            {
+                id: 'singapore-airlines',
+                name: 'Singapore Airlines',
+                logo: '✈️',
+                country: 'Singapore',
+                flag: '🇸🇬',
+                rating: 5,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Singapore Changi Airport',
+                description: 'Consistently rated as one of the world\'s best airlines, Singapore Airlines is known for exceptional service, innovative cabin products, and the iconic Singapore Girl. Their Suites Class offers private cabins with beds.',
+                features: ['Book the Cook', 'Premium wines', 'Luxury amenity kits', 'Spacious seats', 'KrisWorld entertainment'],
+                destinations: ['130+ destinations worldwide'],
+                classOptions: ['Economy', 'Premium Economy', 'Business', 'First Class', 'Suites'],
+                avgPrice: '$700-$18,000'
+            },
+            {
+                id: 'qatar-airways',
+                name: 'Qatar Airways',
+                logo: '🛫',
+                country: 'Qatar',
+                flag: '🇶🇦',
+                rating: 5,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Hamad International Airport',
+                description: 'World\'s best airline multiple years running, Qatar Airways offers the revolutionary Qsuite Business Class with private cabins and double beds. Known for excellent service and modern fleet.',
+                features: ['Qsuite Business Class', 'Oryx One entertainment', 'Dine on demand', 'Al Mourjan lounge', 'Generous baggage'],
+                destinations: ['160+ destinations'],
+                classOptions: ['Economy', 'Business', 'First Class'],
+                avgPrice: '$750-$16,000'
+            },
+            {
+                id: 'british-airways',
+                name: 'British Airways',
+                logo: '🇬🇧',
+                country: 'United Kingdom',
+                flag: '🇬🇧',
+                rating: 4,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'London Heathrow Airport',
+                description: 'The UK\'s flag carrier offers extensive global connections, Club World Business Class with lie-flat beds, and access to prestigious lounges worldwide.',
+                features: ['Avios rewards', 'Club World', 'Galleries lounges', 'WiFi available', 'Premium dining'],
+                destinations: ['200+ destinations'],
+                classOptions: ['Economy', 'Premium Economy', 'Business', 'First'],
+                avgPrice: '$600-$12,000'
+            },
+            {
+                id: 'lufthansa',
+                name: 'Lufthansa',
+                logo: '🦅',
+                country: 'Germany',
+                flag: '🇩🇪',
+                rating: 4,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Frankfurt Airport',
+                description: 'Germany\'s largest airline and Europe\'s leading carrier. Known for precision, reliability, and excellent Business Class featuring fully flat beds.',
+                features: ['Star Alliance member', 'Miles & More', 'Senator lounges', 'German efficiency', 'Modern fleet'],
+                destinations: ['220+ destinations'],
+                classOptions: ['Economy', 'Premium Economy', 'Business', 'First'],
+                avgPrice: '$500-$10,000'
+            },
+            {
+                id: 'ana',
+                name: 'All Nippon Airways',
+                logo: '🇯🇵',
+                country: 'Japan',
+                flag: '🇯🇵',
+                rating: 5,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Tokyo Narita & Haneda',
+                description: 'Japan\'s largest airline offers the legendary Japanese hospitality and THE Room Business Class. Known for punctuality, cleanliness, and exceptional food.',
+                features: ['Japanese hospitality', 'THE Room suites', 'Multi-course kaiseki', 'ANA lounges', 'Polite service'],
+                destinations: ['100+ destinations'],
+                classOptions: ['Economy', 'Premium Economy', 'Business', 'First'],
+                avgPrice: '$600-$14,000'
+            },
+            {
+                id: 'cathay-pacific',
+                name: 'Cathay Pacific',
+                logo: '🐉',
+                country: 'Hong Kong',
+                flag: '🇭🇰',
+                rating: 4,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Hong Kong International',
+                description: 'Hong Kong\'s flagship carrier known for excellent Business Class with reverse herringbone seats and world-class lounges including The Pier.',
+                features: ['The Pier lounges', 'Excellent food', 'Asia Miles', 'Modern fleet', 'Studio entertainment'],
+                destinations: ['70+ destinations'],
+                classOptions: ['Economy', 'Premium Economy', 'Business', 'First'],
+                avgPrice: '$700-$12,000'
+            },
+            {
+                id: 'delta',
+                name: 'Delta Air Lines',
+                logo: '🔺',
+                country: 'United States',
+                flag: '🇺🇸',
+                rating: 4,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Atlanta Hartsfield-Jackson',
+                description: 'One of America\'s largest airlines with extensive domestic and international network. Delta One offers lie-flat seats with direct aisle access.',
+                features: ['SkyMiles program', 'Delta One suites', 'Sky Club lounges', 'Free entertainment', 'Reliable service'],
+                destinations: ['300+ destinations'],
+                classOptions: ['Main Cabin', 'Comfort+', 'First', 'Delta One'],
+                avgPrice: '$300-$8,000'
+            },
+            {
+                id: 'ryanair',
+                name: 'Ryanair',
+                logo: '💰',
+                country: 'Ireland',
+                flag: '🇮🇪',
+                rating: 3,
+                type: 'Budget',
+                allInclusive: false,
+                hub: 'Dublin Airport',
+                description: 'Europe\'s largest low-cost carrier offers incredibly cheap fares across Europe. Basic service with options to add extras.',
+                features: ['Low fares', 'Priority boarding available', 'Reserved seating extra', 'Baggage fees apply', 'Extensive network'],
+                destinations: ['200+ European destinations'],
+                classOptions: ['Standard', 'Plus', 'Flexi Plus'],
+                avgPrice: '$15-$200'
+            },
+            {
+                id: 'easyjet',
+                name: 'easyJet',
+                logo: '🍊',
+                country: 'United Kingdom',
+                flag: '🇬🇧',
+                rating: 3,
+                type: 'Budget',
+                allInclusive: false,
+                hub: 'London Gatwick',
+                description: 'Popular European low-cost airline offering affordable flights across Europe and beyond. Good value with flexible fare options.',
+                features: ['Allocated seating', 'Extra legroom available', 'Speedy boarding', 'Hand luggage included', 'Flight changes allowed'],
+                destinations: ['150+ destinations'],
+                classOptions: ['Standard', 'Plus', 'Flexi'],
+                avgPrice: '$30-$300'
+            },
+            {
+                id: 'southwest',
+                name: 'Southwest Airlines',
+                logo: '❤️',
+                country: 'United States',
+                flag: '🇺🇸',
+                rating: 4,
+                type: 'Budget',
+                allInclusive: false,
+                hub: 'Dallas Love Field',
+                description: 'America\'s favorite low-cost carrier known for free checked bags, no change fees, and friendly service.',
+                features: ['2 free checked bags', 'No change fees', 'Open seating', 'Points don\'t expire', 'WiFi available'],
+                destinations: ['100+ US destinations'],
+                classOptions: ['Wanna Get Away', 'Anytime', 'Business Select'],
+                avgPrice: '$50-$500'
+            },
+            {
+                id: 'jetblue',
+                name: 'JetBlue Airways',
+                logo: '💙',
+                country: 'United States',
+                flag: '🇺🇸',
+                rating: 4,
+                type: 'Mid-Range',
+                allInclusive: false,
+                hub: 'New York JFK',
+                description: 'Known for great customer service, free WiFi, and most legroom in coach. Mint Class offers lie-flat suites.',
+                features: ['Free WiFi', 'Free snacks', 'Most legroom', 'Mint suites', 'Live TV'],
+                destinations: ['100+ destinations'],
+                classOptions: ['Core', 'Blue', 'Blue Plus', 'Mint'],
+                avgPrice: '$100-$1,500'
+            },
+            {
+                id: 'thai-airways',
+                name: 'Thai Airways',
+                logo: '🇹🇭',
+                country: 'Thailand',
+                flag: '🇹🇭',
+                rating: 4,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Bangkok Suvarnabhumi',
+                description: 'Thailand\'s national carrier known for warm Thai hospitality, excellent cuisine, and Royal Silk Class service.',
+                features: ['Thai hospitality', 'Royal Silk Class', 'Spa treatments', 'Thai cuisine', 'Lounges'],
+                destinations: ['60+ destinations'],
+                classOptions: ['Economy', 'Royal Silk', 'First'],
+                avgPrice: '$500-$10,000'
+            },
+            {
+                id: 'air-france',
+                name: 'Air France',
+                logo: '🇫🇷',
+                country: 'France',
+                flag: '🇫🇷',
+                rating: 4,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Paris Charles de Gaulle',
+                description: 'France\'s flag carrier offers French elegance and gastronomy at 35,000 feet. La Première offers ultimate luxury.',
+                features: ['French cuisine', 'La Première suites', 'Flying Blue', 'Champagne service', 'Art collection'],
+                destinations: ['190+ destinations'],
+                classOptions: ['Economy', 'Premium Economy', 'Business', 'La Première'],
+                avgPrice: '$600-$15,000'
+            },
+            {
+                id: 'klm',
+                name: 'KLM Royal Dutch',
+                logo: '🇳🇱',
+                country: 'Netherlands',
+                flag: '🇳🇱',
+                rating: 4,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Amsterdam Schiphol',
+                description: 'The world\'s oldest airline still operating under its original name. Known for innovation and excellent Business Class.',
+                features: ['World Business Class', 'Crown Lounges', 'Flying Blue', 'Dutch hospitality', 'Delftware houses'],
+                destinations: ['160+ destinations'],
+                classOptions: ['Economy', 'Premium Comfort', 'Business'],
+                avgPrice: '$500-$8,000'
+            },
+            {
+                id: 'turkish-airlines',
+                name: 'Turkish Airlines',
+                logo: '🇹🇷',
+                country: 'Turkey',
+                flag: '🇹🇷',
+                rating: 4,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Istanbul Airport',
+                description: 'Flies to more countries than any other airline. Known for excellent catering, generous baggage, and the Istanbul Lounge.',
+                features: ['Most destinations', 'Turkish cuisine', 'Istanbul Lounge', 'Flying Chef', 'Miles&Smiles'],
+                destinations: ['300+ destinations in 120+ countries'],
+                classOptions: ['Economy', 'Premium Economy', 'Business'],
+                avgPrice: '$400-$7,000'
+            },
+            {
+                id: 'etihad',
+                name: 'Etihad Airways',
+                logo: '🇦🇪',
+                country: 'United Arab Emirates',
+                flag: '🇦🇪',
+                rating: 5,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Abu Dhabi International',
+                description: 'UAE\'s national airline offering The Residence three-room suite, the ultimate in airline luxury with butler service.',
+                features: ['The Residence', 'Butler service', 'Onboard shower', 'Chauffeur service', 'Flying nanny'],
+                destinations: ['80+ destinations'],
+                classOptions: ['Economy', 'Business', 'First', 'The Residence'],
+                avgPrice: '$700-$20,000'
+            },
+            {
+                id: 'virgin-atlantic',
+                name: 'Virgin Atlantic',
+                logo: '❤️',
+                country: 'United Kingdom',
+                flag: '🇬🇧',
+                rating: 4,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'London Heathrow',
+                description: 'Richard Branson\'s stylish airline known for innovation, Upper Class Suite, and the famous Clubhouse lounges.',
+                features: ['Upper Class Suite', 'Clubhouse lounges', 'Onboard bar', 'Style and service', 'Social spaces'],
+                destinations: ['30+ destinations'],
+                classOptions: ['Economy', 'Premium', 'Upper Class'],
+                avgPrice: '$500-$9,000'
+            },
+            {
+                id: 'qantas',
+                name: 'Qantas Airways',
+                logo: '🦘',
+                country: 'Australia',
+                flag: '🇦🇺',
+                rating: 4,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Sydney Kingsford Smith',
+                description: 'Australia\'s flag carrier and one of the world\'s safest airlines. Known for long-haul expertise and Australian hospitality.',
+                features: ['Excellent safety', 'Qantas Lounges', 'Rockpool dining', 'Frequent Flyer', 'Wellbeing initiatives'],
+                destinations: ['85+ destinations'],
+                classOptions: ['Economy', 'Premium Economy', 'Business', 'First'],
+                avgPrice: '$600-$12,000'
+            },
+            {
+                id: 'air-new-zealand',
+                name: 'Air New Zealand',
+                logo: '🥝',
+                country: 'New Zealand',
+                flag: '🇳🇿',
+                rating: 5,
+                type: 'Premium',
+                allInclusive: true,
+                hub: 'Auckland Airport',
+                description: 'Known for innovative cabin designs including Skycouch and Business Premier lie-flat beds. Award-winning service.',
+                features: ['Skycouch', 'Business Premier', 'Kiwi hospitality', 'Creative safety videos', 'Airpoints'],
+                destinations: ['50+ destinations'],
+                classOptions: ['Economy', 'Skycouch', 'Premium Economy', 'Business Premier'],
+                avgPrice: '$500-$10,000'
+            }
+        ];
+
+        // Quiz questions with branching logic
+        const quizQuestions = [
+            {
+                id: 1,
+                question: 'What type of climate do you prefer?',
+                options: [
+                    { text: 'Hot and sunny beaches', value: 'tropical', icon: '☀️' },
+                    { text: 'Cold and snowy mountains', value: 'cold', icon: '❄️' },
+                    { text: 'Mild and pleasant weather', value: 'temperate', icon: '🌤️' },
+                    { text: 'Hot and dry desert', value: 'desert', icon: '🏜️' }
+                ],
+                next: 2
+            },
+            {
+                id: 2,
+                question: 'What is your budget range per day?',
+                options: [
+                    { text: 'Under $50 - Budget traveler', value: 'budget', icon: '💵' },
+                    { text: '$50-150 - Mid-range comfort', value: 'mid', icon: '💰' },
+                    { text: '$150+ - Luxury experience', value: 'luxury', icon: '💎' }
+                ],
+                next: 3
+            },
+            {
+                id: 3,
+                question: 'What activities interest you most?',
+                options: [
+                    { text: 'Beach relaxation & water sports', value: 'beach', icon: '🏖️', branch: 4 },
+                    { text: 'Cultural sites & museums', value: 'culture', icon: '🏛️', branch: 5 },
+                    { text: 'Adventure & outdoor activities', value: 'adventure', icon: '🧗', branch: 6 },
+                    { text: 'Food & nightlife', value: 'food', icon: '🍽️', branch: 7 }
+                ]
+            },
+            {
+                id: 4,
+                question: 'What type of beach experience do you want?',
+                options: [
+                    { text: 'Surfing and active water sports', value: 'surfing' },
+                    { text: 'Snorkeling and diving', value: 'diving' },
+                    { text: 'Relaxing on pristine beaches', value: 'relax' },
+                    { text: 'Party beaches and beach clubs', value: 'party' }
+                ],
+                next: 8
+            },
+            {
+                id: 5,
+                question: 'What type of culture interests you?',
+                options: [
+                    { text: 'Ancient history and ruins', value: 'ancient' },
+                    { text: 'Art galleries and museums', value: 'art' },
+                    { text: 'Religious and spiritual sites', value: 'spiritual' },
+                    { text: 'Local traditions and festivals', value: 'traditions' }
+                ],
+                next: 8
+            },
+            {
+                id: 6,
+                question: 'What type of adventure appeals to you?',
+                options: [
+                    { text: 'Hiking and trekking', value: 'hiking' },
+                    { text: 'Skiing and snowboarding', value: 'skiing' },
+                    { text: 'Safari and wildlife', value: 'safari' },
+                    { text: 'Extreme sports', value: 'extreme' }
+                ],
+                next: 8
+            },
+            {
+                id: 7,
+                question: 'What cuisine are you most excited about?',
+                options: [
+                    { text: 'Asian flavors', value: 'asian' },
+                    { text: 'European fine dining', value: 'european' },
+                    { text: 'Latin American dishes', value: 'latin' },
+                    { text: 'Middle Eastern cuisine', value: 'middle-eastern' }
+                ],
+                next: 8
+            },
+            {
+                id: 8,
+                question: 'Do you have any special requirements?',
+                options: [
+                    { text: 'Wheelchair accessibility needed', value: 'wheelchair' },
+                    { text: 'Family-friendly with kids', value: 'family' },
+                    { text: 'Solo traveler safety', value: 'solo' },
+                    { text: 'No special requirements', value: 'none' }
+                ],
+                next: 9
+            },
+            {
+                id: 9,
+                question: 'How long do you want to travel?',
+                options: [
+                    { text: 'Weekend getaway (2-3 days)', value: 'weekend' },
+                    { text: 'One week vacation', value: 'week' },
+                    { text: 'Two weeks or more', value: 'extended' },
+                    { text: 'Flexible duration', value: 'flexible' }
+                ],
+                next: 10
+            },
+            {
+                id: 10,
+                question: 'Which region interests you most?',
+                options: [
+                    { text: 'Europe', value: 'europe', icon: '🏰' },
+                    { text: 'Asia', value: 'asia', icon: '🏯' },
+                    { text: 'Americas', value: 'americas', icon: '🗽' },
+                    { text: 'Africa & Middle East', value: 'africa', icon: '🦁' },
+                    { text: 'Oceania', value: 'oceania', icon: '🏝️' },
+                    { text: 'Surprise me!', value: 'any', icon: '🎲' }
+                ],
+                next: null
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let quizAnswers = {};
+        let currentRegionFilter = 'all';
+
+        // Navigation
+        function navigateTo(section) {
+            // Hide all sections
+            document.getElementById('home-section').classList.add('hidden');
+            document.getElementById('destinations-section').classList.add('hidden');
+            document.getElementById('airlines-section').classList.add('hidden');
+            document.getElementById('about-section').classList.add('hidden');
+            document.getElementById('quiz-section').classList.add('hidden');
+
+            // Show requested section
+            document.getElementById(`${section}-section`).classList.remove('hidden');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Initialize section-specific content
+            if (section === 'quiz') {
+                startQuiz();
+            } else if (section === 'destinations') {
+                renderDestinations();
+            } else if (section === 'airlines') {
+                renderAirlines();
+            }
+        }
+
+        // Render Popular Destinations
+        function renderPopularDestinations() {
+            const grid = document.getElementById('popular-destinations-grid');
+            grid.innerHTML = popularDestinations.map(dest => `
+        <div class="destination-card rounded-2xl overflow-hidden shadow-xl card-hover cursor-pointer" onclick="showDestinationDetail('${dest.id}')">
+          <div class="h-48 bg-cover bg-center relative" style="background-image: url('${dest.image}')" 
+               onerror="this.style.background='linear-gradient(135deg, #fbbf24, #0ea5e9)'">
+            <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-bold text-blue-900">
+              ${dest.flag}
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-xl text-blue-900 mb-2">${dest.name}</h3>
+            <p class="text-blue-700 text-sm mb-3 line-clamp-2">${dest.description.substring(0, 80)}...</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded-full font-semibold">${dest.bestTime.split(',')[0]}</span>
+              <span class="text-blue-600 font-bold text-sm">Click to explore</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+        }
+
+        // Render World Attractions
+        function renderAttractions() {
+            const grid = document.getElementById('attractions-grid');
+            grid.innerHTML = worldAttractions.map(attr => `
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl p-4 text-center card-hover cursor-pointer" onclick="showAttractionDetail('${attr.name}')">
+          <div class="text-4xl mb-2">${attr.icon}</div>
+          <h3 class="font-bold text-blue-900 text-sm mb-1">${attr.name}</h3>
+          <p class="text-blue-600 text-xs">${attr.location}</p>
+          <p class="text-yellow-600 font-bold text-xs mt-2">${attr.price}</p>
+        </div>
+      `).join('');
+        }
+
+        // Render Countries Grid
+        function renderCountries(filter = 'all') {
+            const grid = document.getElementById('countries-grid');
+            let filteredCountries = allCountries;
+
+            if (filter !== 'all') {
+                filteredCountries = allCountries.filter(c => c.region === filter);
+            }
+
+            grid.innerHTML = filteredCountries.map(country => `
+        <div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 text-center card-hover cursor-pointer hover:bg-white transition-all" 
+             onclick="showCountryDetail('${country.name}')">
+          <div class="text-3xl mb-1">${country.flag}</div>
+          <h3 class="font-bold text-blue-900 text-xs leading-tight">${country.name}</h3>
+        </div>
+      `).join('');
+        }
+
+        function filterCountries(region) {
+            currentRegionFilter = region;
+
+            // Update tab styles
+            document.querySelectorAll('.region-tab').forEach(tab => {
+                if (tab.dataset.region === region) {
+                    tab.classList.remove('bg-white/30', 'text-white');
+                    tab.classList.add('bg-yellow-400', 'text-blue-900');
+                } else {
+                    tab.classList.remove('bg-yellow-400', 'text-blue-900');
+                    tab.classList.add('bg-white/30', 'text-white');
+                }
+            });
+
+            renderCountries(region);
+        }
+
+        // Render Destinations Page
+        function renderDestinations() {
+            const grid = document.getElementById('destinations-grid');
+            grid.innerHTML = popularDestinations.map(dest => `
+        <div class="destination-card rounded-2xl overflow-hidden shadow-xl card-hover cursor-pointer" onclick="showDestinationDetail('${dest.id}')">
+          <div class="h-56 bg-cover bg-center relative" style="background-image: url('${dest.image}')">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div class="absolute top-3 right-3 bg-white/90 rounded-full px-3 py-1">
+              <span class="font-bold text-blue-900">${dest.flag}</span>
+            </div>
+            <div class="absolute bottom-3 left-3 text-white">
+              <h3 class="font-bold text-xl drop-shadow-lg">${dest.name}</h3>
+            </div>
+          </div>
+          <div class="p-4">
+            <p class="text-blue-800 text-sm mb-3">${dest.description.substring(0, 100)}...</p>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">${dest.climate}</span>
+              <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">${dest.budget}</span>
+              <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">${dest.avgTemp}</span>
+            </div>
+            <button class="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-blue-900 font-bold py-2 rounded-full hover:from-yellow-500 hover:to-yellow-600 transition-all">
+              View Details
+            </button>
+          </div>
+        </div>
+      `).join('');
+        }
+
+        function searchDestinations() {
+            const query = document.getElementById('destination-search').value.toLowerCase();
+            const climateFilter = document.getElementById('climate-filter').value;
+            const budgetFilter = document.getElementById('budget-filter').value;
+
+            const filtered = popularDestinations.filter(dest => {
+                const matchesSearch = dest.name.toLowerCase().includes(query) || dest.country.toLowerCase().includes(query);
+                const matchesClimate = climateFilter === 'all' || dest.climate === climateFilter;
+                const matchesBudget = budgetFilter === 'all' || dest.budget === budgetFilter;
+                return matchesSearch && matchesClimate && matchesBudget;
+            });
+
+            const grid = document.getElementById('destinations-grid');
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-white"><p class="text-xl font-bold">No destinations found matching your criteria.</p><p>Try adjusting your filters.</p></div>`;
+            } else {
+                grid.innerHTML = filtered.map(dest => `
+          <div class="destination-card rounded-2xl overflow-hidden shadow-xl card-hover cursor-pointer" onclick="showDestinationDetail('${dest.id}')">
+            <div class="h-56 bg-cover bg-center relative" style="background-image: url('${dest.image}')">
+              <div class="absolute top-3 right-3 bg-white/90 rounded-full px-3 py-1">${dest.flag}</div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-bold text-xl text-blue-900 mb-2">${dest.name}</h3>
+              <p class="text-blue-700 text-sm mb-3">${dest.description.substring(0, 80)}...</p>
+              <button class="w-full btn-primary text-blue-900 font-bold py-2 rounded-full">View Details</button>
+            </div>
+          </div>
+        `).join('');
+            }
+        }
+
+        function filterDestinations() {
+            searchDestinations();
+        }
+
+        // Render Airlines
+        function renderAirlines() {
+            const grid = document.getElementById('airlines-grid');
+            grid.innerHTML = airlines.map(airline => `
+        <div class="bg-white/95 rounded-2xl overflow-hidden shadow-xl card-hover cursor-pointer" onclick="showAirlineDetail('${airline.id}')">
+          <div class="bg-gradient-to-r from-blue-900 to-blue-700 p-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-4xl">${airline.logo}</span>
+              <div>
+                <h3 class="font-bold text-white text-lg">${airline.name}</h3>
+                <span class="text-blue-200 text-sm">${airline.flag} ${airline.country}</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="star-rating text-lg">${'★'.repeat(airline.rating)}${'☆'.repeat(5 - airline.rating)}</div>
+              <span class="text-xs ${airline.allInclusive ? 'bg-green-400' : 'bg-orange-400'} text-white px-2 py-1 rounded-full">
+                ${airline.allInclusive ? 'All-Inclusive' : 'Budget'}
+              </span>
+            </div>
+          </div>
+          <div class="p-4">
+            <p class="text-blue-800 text-sm mb-3 line-clamp-2">${airline.description.substring(0, 100)}...</p>
+            <div class="flex flex-wrap gap-2 mb-3">
+              ${airline.features.slice(0, 3).map(f => `<span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">${f}</span>`).join('')}
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-blue-600"><strong>Hub:</strong> ${airline.hub.split(' ')[0]}</span>
+              <span class="text-yellow-600 font-bold text-sm">${airline.avgPrice.split('-')[0]}+</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+        }
+
+        // Quiz Functions
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            quizAnswers = {};
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('results-container').classList.add('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            const totalQuestions = quizQuestions.length;
+
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('progress-bar').style.width = `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`;
+
+            const content = document.getElementById('quiz-content');
+            content.innerHTML = `
+        <h2 class="text-2xl md:text-3xl font-bold text-blue-900 mb-8 text-center">${question.question}</h2>
+        <div class="grid gap-4">
+          ${question.options.map((opt, i) => `
+            <button onclick="selectAnswer('${question.id}', '${opt.value}', ${opt.branch || question.next || 'null'})" 
+                    class="w-full bg-gradient-to-r from-blue-50 to-yellow-50 hover:from-yellow-100 hover:to-blue-100 border-2 border-blue-200 hover:border-yellow-400 rounded-xl p-4 text-left transition-all duration-300 flex items-center gap-4 group">
+              <span class="text-3xl group-hover:scale-125 transition-transform">${opt.icon || '✓'}</span>
+              <span class="font-semibold text-blue-900 text-lg">${opt.text}</span>
+            </button>
+          `).join('')}
+        </div>
+        <div class="mt-8 flex justify-center">
+          <button onclick="navigateTo('home')" class="text-blue-600 hover:text-blue-800 font-semibold underline">
+            Return to Home
+          </button>
+        </div>
+      `;
+        }
+
+        function selectAnswer(questionId, value, nextQuestion) {
+            quizAnswers[questionId] = value;
+
+            if (nextQuestion === null || currentQuestionIndex >= quizQuestions.length - 1) {
+                showResults();
+            } else {
+                // Find next question index
+                const nextIndex = quizQuestions.findIndex(q => q.id === nextQuestion);
+                if (nextIndex !== -1) {
+                    currentQuestionIndex = nextIndex;
+                } else {
+                    currentQuestionIndex++;
+                }
+                renderQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('results-container').classList.remove('hidden');
+
+            // Determine best destination based on answers
+            const destination = findBestDestination();
+            const recommendedAirlines = getRecommendedAirlines(destination);
+
+            const content = document.getElementById('results-content');
+            content.innerHTML = `
+        <div class="text-center mb-8">
+          <div class="logo-circle w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
+            <div class="bg-blue-900 w-16 h-16 rounded-full flex items-center justify-center">
+              <span class="text-yellow-400 font-bold text-xs">HOLIDAY<br>TIME</span>
+            </div>
+          </div>
+          <h1 class="text-3xl md:text-4xl font-extrabold text-blue-900 mb-2">Your Perfect Destination</h1>
+          <p class="text-blue-700">Based on your preferences, we recommend...</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-yellow-100 to-blue-100 rounded-2xl overflow-hidden shadow-xl mb-8">
+          <div class="h-64 bg-cover bg-center relative" style="background-image: url('${destination.image}')">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 text-white">
+              <span class="text-5xl mb-2 block">${destination.flag}</span>
+              <h2 class="text-3xl font-bold drop-shadow-lg">${destination.name}</h2>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-blue-800 text-lg mb-4">${destination.description}</p>
+            
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
+              <div class="bg-white rounded-xl p-4">
+                <h3 class="font-bold text-blue-900 mb-2">Quick Facts</h3>
+                <ul class="space-y-2 text-sm">
+                  <li><strong>Best Time:</strong> ${destination.bestTime}</li>
+                  <li><strong>Language:</strong> ${destination.language}</li>
+                  <li><strong>Currency:</strong> ${destination.currency}</li>
+                  <li><strong>Avg Temperature:</strong> ${destination.avgTemp}</li>
+                </ul>
+              </div>
+              <div class="bg-white rounded-xl p-4">
+                <h3 class="font-bold text-blue-900 mb-2">Top Attractions</h3>
+                <ul class="space-y-1 text-sm">
+                  ${destination.attractions.slice(0, 4).map(a => `<li>• ${a}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+            
+            <h3 class="font-bold text-blue-900 text-xl mb-4">Recommended Hotels</h3>
+            <div class="grid md:grid-cols-3 gap-4 mb-6">
+              ${destination.hotels.map(hotel => `
+                <div class="bg-white rounded-xl p-4 text-center">
+                  <div class="star-rating">${'★'.repeat(hotel.rating)}${'☆'.repeat(5 - hotel.rating)}</div>
+                  <h4 class="font-bold text-blue-900">${hotel.name}</h4>
+                  <p class="text-blue-600 text-sm">${hotel.type}</p>
+                  <p class="text-yellow-600 font-bold">${hotel.price}</p>
+                </div>
+              `).join('')}
+            </div>
+            
+            <h3 class="font-bold text-blue-900 text-xl mb-4">Where to Eat</h3>
+            <div class="grid md:grid-cols-3 gap-4 mb-6">
+              ${destination.restaurants.map(rest => `
+                <div class="bg-white rounded-xl p-4">
+                  <h4 class="font-bold text-blue-900">${rest.name}</h4>
+                  <p class="text-blue-600 text-sm">${rest.cuisine}</p>
+                  <p class="text-yellow-600 font-bold">${rest.price}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-8">
+          <h3 class="font-bold text-blue-900 text-2xl mb-4 text-center">Recommended Airlines</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            ${recommendedAirlines.map(airline => `
+              <div class="bg-white rounded-xl p-4 flex items-center gap-4 cursor-pointer card-hover" onclick="showAirlineDetail('${airline.id}')">
+                <span class="text-4xl">${airline.logo}</span>
+                <div class="flex-1">
+                  <h4 class="font-bold text-blue-900">${airline.name}</h4>
+                  <div class="star-rating text-sm">${'★'.repeat(airline.rating)}${'☆'.repeat(5 - airline.rating)}</div>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs ${airline.allInclusive ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'} px-2 py-1 rounded-full">
+                    ${airline.allInclusive ? 'All-Inclusive' : 'Budget'}
+                  </span>
+                  <p class="text-yellow-600 font-bold text-sm mt-1">${airline.avgPrice.split('-')[0]}+</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap gap-4 justify-center">
+          <button onclick="startQuiz()" class="btn-primary text-blue-900 font-bold px-8 py-3 rounded-full">
+            Take Quiz Again
+          </button>
+          <button onclick="navigateTo('destinations')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-full transition-all">
+            Explore All Destinations
+          </button>
+          <button onclick="navigateTo('home')" class="bg-gray-200 hover:bg-gray-300 text-blue-900 font-bold px-8 py-3 rounded-full transition-all">
+            Back to Home
+          </button>
+        </div>
+      `;
+        }
+
+        function findBestDestination() {
+            const climate = quizAnswers['1'] || 'temperate';
+            const budget = quizAnswers['2'] || 'mid';
+
+            // Filter destinations based on quiz answers
+            let matches = popularDestinations.filter(d => {
+                let score = 0;
+                if (d.climate === climate) score += 2;
+                if (d.budget === budget) score += 2;
+                return score > 0;
+            });
+
+            // If no matches, return a random popular destination
+            if (matches.length === 0) {
+                matches = popularDestinations;
+            }
+
+            // Return the best match (first one after sorting by score)
+            return matches[Math.floor(Math.random() * matches.length)];
+        }
+
+        function getRecommendedAirlines(destination) {
+            const budget = quizAnswers['2'] || 'mid';
+
+            // Filter airlines based on budget
+            let filtered = airlines;
+            if (budget === 'budget') {
+                filtered = airlines.filter(a => !a.allInclusive || a.rating <= 3);
+            } else if (budget === 'luxury') {
+                filtered = airlines.filter(a => a.rating >= 4);
+            }
+
+            // Return top 4 airlines
+            return filtered.slice(0, 4);
+        }
+
+        // Modal Functions
+        function showDestinationDetail(id) {
+            const dest = popularDestinations.find(d => d.id === id);
+            if (!dest) return;
+
+            const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+        <div class="relative">
+          <div class="h-72 bg-cover bg-center" style="background-image: url('${dest.image}')">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/90 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center text-2xl font-bold text-blue-900">×</button>
+            <div class="absolute bottom-4 left-4 text-white">
+              <span class="text-5xl">${dest.flag}</span>
+              <h2 class="text-4xl font-bold drop-shadow-lg">${dest.name}</h2>
+            </div>
+          </div>
+          <div class="p-6 max-h-96 overflow-y-auto scrollbar-custom">
+            <p class="text-blue-800 text-lg mb-6">${dest.description}</p>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+              <div class="bg-gradient-to-br from-yellow-50 to-blue-50 rounded-xl p-4">
+                <h3 class="font-bold text-blue-900 text-xl mb-3">Essential Information</h3>
+                <ul class="space-y-2">
+                  <li class="flex justify-between"><span class="text-blue-700">Best Time to Visit:</span><span class="font-semibold">${dest.bestTime}</span></li>
+                  <li class="flex justify-between"><span class="text-blue-700">Language:</span><span class="font-semibold">${dest.language}</span></li>
+                  <li class="flex justify-between"><span class="text-blue-700">Currency:</span><span class="font-semibold">${dest.currency}</span></li>
+                  <li class="flex justify-between"><span class="text-blue-700">Average Temp:</span><span class="font-semibold">${dest.avgTemp}</span></li>
+                  <li class="flex justify-between"><span class="text-blue-700">Budget Level:</span><span class="font-semibold capitalize">${dest.budget}</span></li>
+                </ul>
+              </div>
+              
+              <div class="bg-gradient-to-br from-blue-50 to-yellow-50 rounded-xl p-4">
+                <h3 class="font-bold text-blue-900 text-xl mb-3">Top Activities</h3>
+                <ul class="space-y-2">
+                  ${dest.activities.map(a => `<li class="flex items-center gap-2"><span class="text-yellow-500">★</span>${a}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+            
+            <h3 class="font-bold text-blue-900 text-xl mb-3">Must-See Attractions</h3>
+            <div class="grid md:grid-cols-2 gap-3 mb-6">
+              ${dest.attractions.map(a => `
+                <div class="bg-white border-2 border-blue-100 rounded-lg p-3 flex justify-between items-center">
+                  <span class="text-blue-800">${a.split(' - ')[0]}</span>
+                  <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm font-bold">${a.split(' - ')[1] || 'Free'}</span>
+                </div>
+              `).join('')}
+            </div>
+            
+            <h3 class="font-bold text-blue-900 text-xl mb-3">Hotels by Budget</h3>
+            <div class="grid md:grid-cols-3 gap-4 mb-6">
+              ${dest.hotels.map(h => `
+                <div class="bg-white rounded-xl p-4 border-2 ${h.type === 'Budget' ? 'border-green-200' : h.type === 'Mid-Range' ? 'border-blue-200' : 'border-yellow-200'}">
+                  <div class="text-center mb-2">
+                    <span class="text-xs px-2 py-1 rounded-full ${h.type === 'Budget' ? 'bg-green-100 text-green-800' : h.type === 'Mid-Range' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'}">${h.type}</span>
+                  </div>
+                  <h4 class="font-bold text-blue-900 text-center">${h.name}</h4>
+                  <div class="star-rating text-center text-sm">${'★'.repeat(h.rating)}${'☆'.repeat(5 - h.rating)}</div>
+                  <p class="text-yellow-600 font-bold text-center text-lg">${h.price}</p>
+                </div>
+              `).join('')}
+            </div>
+            
+            <h3 class="font-bold text-blue-900 text-xl mb-3">Dining Options</h3>
+            <div class="grid md:grid-cols-3 gap-4">
+              ${dest.restaurants.map(r => `
+                <div class="bg-white rounded-xl p-4 border-2 border-orange-100">
+                  <h4 class="font-bold text-blue-900">${r.name}</h4>
+                  <p class="text-blue-600 text-sm">${r.cuisine}</p>
+                  <p class="text-yellow-600 font-bold">${r.price}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function showAirlineDetail(id) {
+            const airline = airlines.find(a => a.id === id);
+            if (!airline) return;
+
+            const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+        <div class="relative">
+          <div class="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 p-8">
+            <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/90 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center text-2xl font-bold text-blue-900">×</button>
+            <div class="flex items-center gap-6">
+              <span class="text-6xl">${airline.logo}</span>
+              <div>
+                <h2 class="text-3xl font-bold text-white">${airline.name}</h2>
+                <p class="text-blue-200">${airline.flag} ${airline.country}</p>
+                <div class="star-rating text-2xl mt-2">${'★'.repeat(airline.rating)}${'☆'.repeat(5 - airline.rating)}</div>
+              </div>
+              <div class="ml-auto text-right">
+                <span class="inline-block ${airline.allInclusive ? 'bg-green-400' : 'bg-orange-400'} text-white px-4 py-2 rounded-full font-bold">
+                  ${airline.allInclusive ? 'All-Inclusive' : 'Budget Carrier'}
+                </span>
+                <p class="text-white mt-2"><strong>Type:</strong> ${airline.type}</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 max-h-96 overflow-y-auto scrollbar-custom">
+            <p class="text-blue-800 text-lg mb-6">${airline.description}</p>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+              <div class="bg-gradient-to-br from-yellow-50 to-blue-50 rounded-xl p-4">
+                <h3 class="font-bold text-blue-900 text-xl mb-3">Airline Details</h3>
+                <ul class="space-y-2">
+                  <li class="flex justify-between"><span class="text-blue-700">Main Hub:</span><span class="font-semibold">${airline.hub}</span></li>
+                  <li class="flex justify-between"><span class="text-blue-700">Destinations:</span><span class="font-semibold">${airline.destinations[0]}</span></li>
+                  <li class="flex justify-between"><span class="text-blue-700">Price Range:</span><span class="font-semibold text-yellow-600">${airline.avgPrice}</span></li>
+                  <li class="flex justify-between"><span class="text-blue-700">Rating:</span><span class="star-rating">${'★'.repeat(airline.rating)}</span></li>
+                </ul>
+              </div>
+              
+              <div class="bg-gradient-to-br from-blue-50 to-yellow-50 rounded-xl p-4">
+                <h3 class="font-bold text-blue-900 text-xl mb-3">Class Options</h3>
+                <div class="flex flex-wrap gap-2">
+                  ${airline.classOptions.map(c => `
+                    <span class="bg-white border-2 border-blue-200 rounded-full px-3 py-1 text-blue-800 text-sm font-semibold">${c}</span>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+            
+            <h3 class="font-bold text-blue-900 text-xl mb-3">Key Features & Amenities</h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              ${airline.features.map(f => `
+                <div class="bg-white rounded-lg p-3 border-2 border-yellow-100 flex items-center gap-2">
+                  <span class="text-yellow-500 text-xl">✓</span>
+                  <span class="text-blue-800">${f}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function showAttractionDetail(name) {
+            const attraction = worldAttractions.find(a => a.name === name);
+            if (!attraction) return;
+
+            const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+        <div class="p-6">
+          <button onclick="closeModal()" class="absolute top-4 right-4 bg-gray-200 hover:bg-gray-300 rounded-full w-10 h-10 flex items-center justify-center text-2xl font-bold text-blue-900">×</button>
+          <div class="text-center mb-6">
+            <span class="text-6xl mb-4 block">${attraction.icon}</span>
+            <h2 class="text-3xl font-bold text-blue-900">${attraction.name}</h2>
+            <p class="text-blue-600 text-lg">${attraction.location}</p>
+          </div>
+          <div class="bg-gradient-to-br from-yellow-50 to-blue-50 rounded-xl p-6 mb-4">
+            <p class="text-blue-800 text-lg">${attraction.description}</p>
+          </div>
+          <div class="flex justify-center">
+            <div class="bg-yellow-100 rounded-xl px-6 py-3">
+              <span class="text-blue-900 font-semibold">Entry Price: </span>
+              <span class="text-yellow-700 font-bold text-xl">${attraction.price}</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function showCountryDetail(countryName) {
+            const country = allCountries.find(c => c.name === countryName);
+            if (!country) return;
+
+            const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('modal-content');
+
+            // Generate mock but realistic data for countries
+            const climateInfo = {
+                tropical: { avgTemp: '28°C', weather: 'Hot and humid with tropical rainfall' },
+                cold: { avgTemp: '5°C', weather: 'Cold winters with snow, mild summers' },
+                temperate: { avgTemp: '15°C', weather: 'Mild seasons with moderate rainfall' },
+                desert: { avgTemp: '35°C', weather: 'Hot and dry with minimal rainfall' }
+            };
+
+            const budgetInfo = {
+                budget: { daily: '$30-50/day', hotels: '$20-40/night' },
+                mid: { daily: '$80-150/day', hotels: '$60-120/night' },
+                luxury: { daily: '$200+/day', hotels: '$150+/night' }
+            };
+
+            content.innerHTML = `
+        <div class="p-6 max-h-screen overflow-y-auto scrollbar-custom">
+          <button onclick="closeModal()" class="absolute top-4 right-4 bg-gray-200 hover:bg-gray-300 rounded-full w-10 h-10 flex items-center justify-center text-2xl font-bold text-blue-900">×</button>
+          <div class="text-center mb-6">
+            <span class="text-7xl mb-4 block">${country.flag}</span>
+            <h2 class="text-3xl font-bold text-blue-900">${country.name}</h2>
+            <p class="text-blue-600">Capital: ${country.capital}</p>
+            <p class="text-blue-500 text-sm capitalize">Region: ${country.region.replace('-', ' ')}</p>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div class="bg-gradient-to-br from-yellow-50 to-blue-50 rounded-xl p-4">
+              <h3 class="font-bold text-blue-900 text-lg mb-3">Climate</h3>
+              <ul class="space-y-2">
+                <li class="flex justify-between"><span>Type:</span><span class="font-semibold capitalize">${country.climate}</span></li>
+                <li class="flex justify-between"><span>Avg Temp:</span><span class="font-semibold">${climateInfo[country.climate].avgTemp}</span></li>
+                <li><span class="text-blue-600 text-sm">${climateInfo[country.climate].weather}</span></li>
+              </ul>
+            </div>
+            
+            <div class="bg-gradient-to-br from-blue-50 to-yellow-50 rounded-xl p-4">
+              <h3 class="font-bold text-blue-900 text-lg mb-3">Budget</h3>
+              <ul class="space-y-2">
+                <li class="flex justify-between"><span>Level:</span><span class="font-semibold capitalize">${country.budget}</span></li>
+                <li class="flex justify-between"><span>Daily Cost:</span><span class="font-semibold text-yellow-600">${budgetInfo[country.budget].daily}</span></li>
+                <li class="flex justify-between"><span>Hotels:</span><span class="font-semibold">${budgetInfo[country.budget].hotels}</span></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="text-center">
+            <button onclick="closeModal(); navigateTo('quiz')" class="btn-primary text-blue-900 font-bold px-6 py-3 rounded-full">
+              Find if ${country.name} is right for you!
+            </button>
+          </div>
+        </div>
+      `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        // Close modal on outside click
+        document.getElementById('detail-modal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            renderPopularDestinations();
+            renderAttractions();
+            renderCountries();
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9d377c1d71f6b26a',t:'MTc3MjAyNTQ2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
