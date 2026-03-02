@@ -1,0 +1,1347 @@
+
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Holiday Time</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Lexend', sans-serif; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    
+    @keyframes wave {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.8); }
+    }
+    
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes bounce-in {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    @keyframes slide-up {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-wave { animation: wave 15s linear infinite; }
+    .animate-shimmer { 
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+    .animate-bounce-in { animation: bounce-in 0.6s ease-out forwards; }
+    .animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
+    
+    .beach-gradient {
+      background: linear-gradient(180deg, 
+        #87CEEB 0%, 
+        #1E90FF 30%, 
+        #FFD700 70%, 
+        #F4A460 100%);
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    }
+    
+    .wave-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 200%;
+      height: 100px;
+      overflow: hidden;
+    }
+    
+    .wave-svg {
+      position: absolute;
+      bottom: 0;
+    }
+    
+    .logo-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+    
+    .logo-ring {
+      position: absolute;
+      inset: 0;
+      border: 4px solid #FCD34D;
+      border-radius: 50%;
+      animation: spin-slow 20s linear infinite;
+    }
+    
+    .logo-ring-inner {
+      position: absolute;
+      inset: 8px;
+      border: 2px dashed #3B82F6;
+      border-radius: 50%;
+      animation: spin-slow 15s linear infinite reverse;
+    }
+    
+    .logo-center {
+      position: absolute;
+      inset: 16px;
+      background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 50%, #3B82F6 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(251, 191, 36, 0.5);
+    }
+    
+    .destination-card img {
+      transition: transform 0.5s ease;
+    }
+    .destination-card:hover img {
+      transform: scale(1.1);
+    }
+    
+    .star-rating {
+      color: #FCD34D;
+      text-shadow: 0 0 10px rgba(252, 211, 77, 0.5);
+    }
+    
+    .scroll-container {
+      max-height: 400px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #FCD34D #1E3A5F;
+    }
+    .scroll-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    .scroll-container::-webkit-scrollbar-track {
+      background: #1E3A5F;
+      border-radius: 4px;
+    }
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #FCD34D;
+      border-radius: 4px;
+    }
+    
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .modal-content {
+      background: linear-gradient(135deg, #1E3A5F 0%, #0F172A 100%);
+      border-radius: 20px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 80%;
+      overflow: hidden;
+      border: 2px solid #FCD34D;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-900 text-white overflow-x-hidden">
+  <div id="app" class="min-h-full"><!-- Navigation -->
+   <nav class="fixed top-0 left-0 right-0 z-50 glass-card">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+     <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
+      <div class="logo-container" style="width: 60px; height: 60px;">
+       <div class="logo-ring"></div>
+       <div class="logo-ring-inner"></div>
+       <div class="logo-center"><span class="text-white font-bold text-xs">HT</span>
+       </div>
+      </div><span id="nav-title" class="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">Holiday Time</span>
+     </div>
+     <div class="hidden md:flex gap-6"><button onclick="showSection('home')" class="hover:text-yellow-400 transition font-medium">Home</button> <button onclick="showSection('quiz')" class="hover:text-yellow-400 transition font-medium">Quiz</button> <button onclick="showSection('destinations')" class="hover:text-yellow-400 transition font-medium">Destinations</button> <button onclick="showSection('airlines')" class="hover:text-yellow-400 transition font-medium">Airlines</button> <button onclick="showSection('attractions')" class="hover:text-yellow-400 transition font-medium">Attractions</button> <button onclick="showSection('about')" class="hover:text-yellow-400 transition font-medium">About</button>
+     </div><button onclick="toggleMobileMenu()" class="md:hidden text-yellow-400">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg></button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
+     <div class="flex flex-col gap-3"><button onclick="showSection('home'); toggleMobileMenu()" class="text-left py-2 hover:text-yellow-400 transition">Home</button> <button onclick="showSection('quiz'); toggleMobileMenu()" class="text-left py-2 hover:text-yellow-400 transition">Quiz</button> <button onclick="showSection('destinations'); toggleMobileMenu()" class="text-left py-2 hover:text-yellow-400 transition">Destinations</button> <button onclick="showSection('airlines'); toggleMobileMenu()" class="text-left py-2 hover:text-yellow-400 transition">Airlines</button> <button onclick="showSection('attractions'); toggleMobileMenu()" class="text-left py-2 hover:text-yellow-400 transition">Attractions</button> <button onclick="showSection('about'); toggleMobileMenu()" class="text-left py-2 hover:text-yellow-400 transition">About</button>
+     </div>
+    </div>
+   </nav><!-- Home Section -->
+   <section id="home-section" class="min-h-full relative overflow-hidden"><!-- Beach Background -->
+    <div class="absolute inset-0 beach-gradient"></div><!-- Animated Sun -->
+    <div class="absolute top-20 right-10 md:right-20 w-32 h-32 md:w-48 md:h-48 animate-float">
+     <div class="w-full h-full rounded-full bg-gradient-to-br from-yellow-300 to-orange-400 animate-pulse-glow"></div>
+     <div class="absolute inset-4 rounded-full bg-gradient-to-br from-yellow-200 to-yellow-400"></div>
+    </div><!-- Clouds -->
+    <div class="absolute top-32 left-10 opacity-80 animate-float" style="animation-delay: -2s;">
+     <svg width="100" height="60" viewbox="0 0 100 60" fill="white"><ellipse cx="30" cy="40" rx="25" ry="15" /> <ellipse cx="55" cy="35" rx="30" ry="20" /> <ellipse cx="75" cy="40" rx="20" ry="12" />
+     </svg>
+    </div>
+    <div class="absolute top-48 left-1/3 opacity-60 animate-float" style="animation-delay: -4s;">
+     <svg width="80" height="50" viewbox="0 0 80 50" fill="white"><ellipse cx="25" cy="32" rx="20" ry="12" /> <ellipse cx="45" cy="28" rx="25" ry="15" /> <ellipse cx="60" cy="32" rx="15" ry="10" />
+     </svg>
+    </div><!-- Palm Trees -->
+    <div class="absolute bottom-24 left-5 md:left-20">
+     <svg width="80" height="150" viewbox="0 0 80 150" class="animate-float" style="animation-delay: -1s;"><path d="M40 150 L38 80 Q35 60 40 50 Q45 60 42 80 L40 150" fill="#8B4513" /> <ellipse cx="40" cy="45" rx="35" ry="8" fill="#228B22" transform="rotate(-30 40 45)" /> <ellipse cx="40" cy="42" rx="32" ry="7" fill="#32CD32" transform="rotate(20 40 42)" /> <ellipse cx="40" cy="40" rx="30" ry="6" fill="#228B22" transform="rotate(-60 40 40)" /> <ellipse cx="40" cy="38" rx="28" ry="6" fill="#32CD32" transform="rotate(50 40 38)" />
+     </svg>
+    </div>
+    <div class="absolute bottom-24 right-5 md:right-20">
+     <svg width="70" height="130" viewbox="0 0 70 130" class="animate-float" style="animation-delay: -3s;"><path d="M35 130 L33 70 Q30 55 35 45 Q40 55 37 70 L35 130" fill="#8B4513" /> <ellipse cx="35" cy="40" rx="30" ry="7" fill="#228B22" transform="rotate(-25 35 40)" /> <ellipse cx="35" cy="38" rx="28" ry="6" fill="#32CD32" transform="rotate(25 35 38)" /> <ellipse cx="35" cy="36" rx="25" ry="5" fill="#228B22" transform="rotate(-55 35 36)" />
+     </svg>
+    </div><!-- Waves -->
+    <div class="wave-container animate-wave">
+     <svg class="wave-svg" width="200%" height="100" viewbox="0 0 1440 100" preserveaspectratio="none"><path fill="#1E3A5F" fill-opacity="0.6" d="M0,40 C360,80 720,0 1080,40 C1260,60 1440,20 1440,20 L1440,100 L0,100 Z" />
+     </svg>
+    </div>
+    <div class="wave-container animate-wave" style="animation-delay: -5s;">
+     <svg class="wave-svg" width="200%" height="100" viewbox="0 0 1440 100" preserveaspectratio="none" style="bottom: -10px;"><path fill="#1E3A5F" fill-opacity="0.8" d="M0,60 C360,20 720,80 1080,40 C1260,20 1440,60 1440,60 L1440,100 L0,100 Z" />
+     </svg>
+    </div><!-- Hero Content -->
+    <div class="relative z-10 pt-32 pb-40 px-4 text-center"><!-- Animated Logo -->
+     <div class="flex justify-center mb-8">
+      <div class="logo-container animate-bounce-in" style="width: 150px; height: 150px;">
+       <div class="logo-ring" style="border-width: 5px;"></div>
+       <div class="logo-ring-inner" style="inset: 10px; border-width: 3px;"></div>
+       <div class="logo-center" style="inset: 20px;">
+        <div class="text-center">
+         <svg class="w-12 h-12 text-white mx-auto mb-1" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+         </svg><span class="text-white font-bold text-sm">HT</span>
+        </div>
+       </div>
+      </div>
+     </div>
+     <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold mb-4 animate-slide-up"><span class="bg-gradient-to-r from-yellow-300 via-yellow-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg">Holiday Time</span></h1>
+     <p id="hero-tagline" class="text-xl md:text-2xl text-white font-medium mb-8 animate-slide-up" style="animation-delay: 0.2s;">Find Your Perfect Escape</p>
+     <p class="text-lg text-white/90 max-w-2xl mx-auto mb-10 animate-slide-up" style="animation-delay: 0.3s;">Discover personalized holiday destinations tailored to your preferences, budget, and special requirements. From tropical beaches to snowy mountains!</p>
+     <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style="animation-delay: 0.4s;"><button onclick="showSection('quiz')" class="px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-slate-900 font-bold rounded-full text-lg hover:from-yellow-300 hover:to-yellow-400 transition transform hover:scale-105 shadow-lg animate-pulse-glow"> Start Your Journey </button> <button onclick="showSection('destinations')" class="px-8 py-4 bg-white/20 backdrop-blur text-white font-bold rounded-full text-lg hover:bg-white/30 transition transform hover:scale-105 border-2 border-white/50"> Explore Destinations </button>
+     </div><!-- Decorative Elements -->
+     <div class="flex justify-center gap-4 mt-12 animate-slide-up" style="animation-delay: 0.5s;"><span class="text-4xl animate-float" style="animation-delay: 0s;">🏖️</span> <span class="text-4xl animate-float" style="animation-delay: -1s;">✈️</span> <span class="text-4xl animate-float" style="animation-delay: -2s;">🏔️</span> <span class="text-4xl animate-float" style="animation-delay: -3s;">🌴</span> <span class="text-4xl animate-float" style="animation-delay: -4s;">🗺️</span>
+     </div>
+    </div><!-- Popular Destinations Preview -->
+    <div class="relative z-10 bg-slate-900/95 py-16 px-4">
+     <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">Popular Destinations</h2>
+     <p class="text-center text-gray-300 mb-10 max-w-2xl mx-auto">Click on any destination to learn more about this amazing location</p>
+     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"><!-- Maldives -->
+      <div class="destination-card glass-card rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="openDestinationModal('maldives')">
+       <div class="h-48 overflow-hidden relative"><img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=400" alt="Maldives" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #0EA5E9, #06B6D4)'; this.alt='Maldives';">
+        <div class="absolute top-3 right-3 bg-yellow-400 text-slate-900 px-3 py-1 rounded-full text-sm font-bold">
+         Hot
+        </div>
+       </div>
+       <div class="p-4">
+        <h3 class="font-bold text-lg text-yellow-400">Maldives</h3>
+        <p class="text-gray-300 text-sm">Tropical Paradise</p>
+        <div class="flex items-center gap-2 mt-2"><span class="star-rating">★★★★★</span> <span class="text-xs text-gray-400">From $150/night</span>
+        </div>
+       </div>
+      </div><!-- Switzerland -->
+      <div class="destination-card glass-card rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="openDestinationModal('switzerland')">
+       <div class="h-48 overflow-hidden relative"><img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400" alt="Switzerland" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #E0F2FE, #BAE6FD)'; this.alt='Switzerland';">
+        <div class="absolute top-3 right-3 bg-blue-400 text-slate-900 px-3 py-1 rounded-full text-sm font-bold">
+         Cold
+        </div>
+       </div>
+       <div class="p-4">
+        <h3 class="font-bold text-lg text-yellow-400">Switzerland</h3>
+        <p class="text-gray-300 text-sm">Alpine Wonderland</p>
+        <div class="flex items-center gap-2 mt-2"><span class="star-rating">★★★★★</span> <span class="text-xs text-gray-400">From $200/night</span>
+        </div>
+       </div>
+      </div><!-- Japan -->
+      <div class="destination-card glass-card rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="openDestinationModal('japan')">
+       <div class="h-48 overflow-hidden relative"><img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400" alt="Japan" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #FCA5A5, #FECACA)'; this.alt='Japan';">
+        <div class="absolute top-3 right-3 bg-pink-400 text-slate-900 px-3 py-1 rounded-full text-sm font-bold">
+         Culture
+        </div>
+       </div>
+       <div class="p-4">
+        <h3 class="font-bold text-lg text-yellow-400">Japan</h3>
+        <p class="text-gray-300 text-sm">Ancient Meets Modern</p>
+        <div class="flex items-center gap-2 mt-2"><span class="star-rating">★★★★★</span> <span class="text-xs text-gray-400">From $120/night</span>
+        </div>
+       </div>
+      </div><!-- Iceland -->
+      <div class="destination-card glass-card rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="openDestinationModal('iceland')">
+       <div class="h-48 overflow-hidden relative"><img src="https://images.unsplash.com/photo-1520769945061-0a448c463865?w=400" alt="Iceland" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #A5F3FC, #67E8F9)'; this.alt='Iceland';">
+        <div class="absolute top-3 right-3 bg-cyan-400 text-slate-900 px-3 py-1 rounded-full text-sm font-bold">
+         Adventure
+        </div>
+       </div>
+       <div class="p-4">
+        <h3 class="font-bold text-lg text-yellow-400">Iceland</h3>
+        <p class="text-gray-300 text-sm">Land of Fire &amp; Ice</p>
+        <div class="flex items-center gap-2 mt-2"><span class="star-rating">★★★★☆</span> <span class="text-xs text-gray-400">From $180/night</span>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="text-center mt-10"><button onclick="showSection('destinations')" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-full hover:from-blue-400 hover:to-blue-500 transition transform hover:scale-105"> View All 195+ Destinations </button>
+     </div>
+    </div><!-- Features Section -->
+    <div class="relative z-10 bg-gradient-to-b from-slate-900 to-slate-800 py-16 px-4">
+     <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">Why Choose Holiday Time?</h2>
+     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="glass-card p-6 rounded-2xl text-center card-hover">
+       <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-yellow-400 mb-2">Personalized Matches</h3>
+       <p class="text-gray-300">Our smart quiz matches you with destinations based on your exact preferences and requirements</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl text-center card-hover">
+       <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-yellow-400 mb-2">Budget Friendly</h3>
+       <p class="text-gray-300">Find options for every budget from backpacker to luxury, with transparent pricing</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl text-center card-hover">
+       <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-yellow-400 mb-2">Special Needs</h3>
+       <p class="text-gray-300">Accessibility options and special requirements accommodated for every traveler</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Quiz Section -->
+   <section id="quiz-section" class="min-h-full bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pt-24 pb-16 px-4 hidden">
+    <div class="max-w-3xl mx-auto">
+     <div class="text-center mb-10">
+      <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">Find Your Perfect Holiday</h2>
+      <p class="text-gray-300">Answer these questions to discover your ideal destination</p>
+     </div>
+     <div id="quiz-container" class="glass-card rounded-3xl p-8"><!-- Quiz Progress -->
+      <div class="mb-8">
+       <div class="flex justify-between text-sm text-gray-400 mb-2"><span id="quiz-progress-text">Question 1 of 10</span> <span id="quiz-percentage">10%</span>
+       </div>
+       <div class="w-full h-3 bg-slate-700 rounded-full overflow-hidden">
+        <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-yellow-400 to-blue-500 rounded-full transition-all duration-500" style="width: 10%"></div>
+       </div>
+      </div><!-- Quiz Question -->
+      <div id="quiz-question-container">
+       <h3 id="quiz-question" class="text-2xl font-bold text-yellow-400 mb-6">What climate do you prefer?</h3>
+       <div id="quiz-options" class="grid grid-cols-1 gap-4"><!-- Options will be populated by JavaScript -->
+       </div>
+      </div><!-- Quiz Navigation -->
+      <div class="flex justify-between mt-8"><button id="quiz-prev" onclick="prevQuestion()" class="px-6 py-3 bg-slate-700 text-white font-medium rounded-full hover:bg-slate-600 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled> Previous </button> <button id="quiz-next" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-slate-900 font-bold rounded-full hover:from-yellow-300 hover:to-yellow-400 transition"> Next </button>
+      </div>
+     </div><!-- Quiz Results -->
+     <div id="quiz-results" class="hidden"><!-- Results will be shown here -->
+     </div>
+    </div>
+   </section><!-- Destinations Section -->
+   <section id="destinations-section" class="min-h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-24 pb-16 px-4 hidden">
+    <div class="max-w-7xl mx-auto">
+     <div class="text-center mb-10">
+      <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">Explore All Destinations</h2>
+      <p class="text-gray-300 max-w-2xl mx-auto">Browse through 195+ countries and territories. Click on any destination for detailed information.</p>
+     </div><!-- Search and Filter -->
+     <div class="glass-card rounded-2xl p-6 mb-8">
+      <div class="flex flex-col md:flex-row gap-4">
+       <div class="flex-1"><input type="text" id="destination-search" placeholder="Search destinations..." class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white placeholder-gray-400 focus:border-yellow-400 focus:outline-none" oninput="filterDestinations()">
+       </div>
+       <div class="flex gap-2 flex-wrap"><button onclick="filterByRegion('all')" class="filter-btn px-4 py-2 bg-yellow-400 text-slate-900 rounded-full font-medium hover:bg-yellow-300 transition" data-region="all">All</button> <button onclick="filterByRegion('europe')" class="filter-btn px-4 py-2 bg-slate-700 text-white rounded-full font-medium hover:bg-slate-600 transition" data-region="europe">Europe</button> <button onclick="filterByRegion('asia')" class="filter-btn px-4 py-2 bg-slate-700 text-white rounded-full font-medium hover:bg-slate-600 transition" data-region="asia">Asia</button> <button onclick="filterByRegion('africa')" class="filter-btn px-4 py-2 bg-slate-700 text-white rounded-full font-medium hover:bg-slate-600 transition" data-region="africa">Africa</button> <button onclick="filterByRegion('americas')" class="filter-btn px-4 py-2 bg-slate-700 text-white rounded-full font-medium hover:bg-slate-600 transition" data-region="americas">Americas</button> <button onclick="filterByRegion('oceania')" class="filter-btn px-4 py-2 bg-slate-700 text-white rounded-full font-medium hover:bg-slate-600 transition" data-region="oceania">Oceania</button>
+       </div>
+      </div>
+     </div><!-- Destinations Grid -->
+     <div id="destinations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"><!-- Populated by JavaScript -->
+     </div>
+     <div id="no-results" class="hidden text-center py-16">
+      <p class="text-gray-400 text-lg">No destinations found matching your search</p>
+     </div>
+    </div>
+   </section><!-- Airlines Section -->
+   <section id="airlines-section" class="min-h-full bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pt-24 pb-16 px-4 hidden">
+    <div class="max-w-7xl mx-auto">
+     <div class="text-center mb-10">
+      <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">Recommended Airlines</h2>
+      <p class="text-gray-300 max-w-2xl mx-auto">Click on any airline to learn more about their services, ratings, and what's included</p>
+     </div>
+     <div id="airlines-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Populated by JavaScript -->
+     </div>
+    </div>
+   </section><!-- Attractions Section -->
+   <section id="attractions-section" class="min-h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-24 pb-16 px-4 hidden">
+    <div class="max-w-7xl mx-auto">
+     <div class="text-center mb-10">
+      <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">World Famous Attractions</h2>
+      <p class="text-gray-300 max-w-2xl mx-auto">Discover the most iconic landmarks and attractions around the globe</p>
+     </div>
+     <div id="attractions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Populated by JavaScript -->
+     </div>
+    </div>
+   </section><!-- About Section -->
+   <section id="about-section" class="min-h-full bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 pt-24 pb-16 px-4 hidden">
+    <div class="max-w-4xl mx-auto">
+     <div class="text-center mb-10">
+      <div class="flex justify-center mb-6">
+       <div class="logo-container" style="width: 120px; height: 120px;">
+        <div class="logo-ring"></div>
+        <div class="logo-ring-inner"></div>
+        <div class="logo-center">
+         <div class="text-center">
+          <svg class="w-10 h-10 text-white mx-auto" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg><span class="text-white font-bold text-xs">HT</span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">About Holiday Time</h2>
+     </div>
+     <div class="glass-card rounded-3xl p-8 mb-8">
+      <h3 class="text-2xl font-bold text-yellow-400 mb-4">Our Mission</h3>
+      <p class="text-gray-300 mb-6 leading-relaxed">Holiday Time was created with a simple but powerful mission: to make finding the perfect holiday destination effortless and enjoyable for everyone. We understand that every traveler is unique, with different preferences, budgets, and needs. That's why we've developed a personalized quiz system that matches you with destinations tailored specifically to your requirements.</p>
+      <p class="text-gray-300 mb-6 leading-relaxed">Whether you're seeking a tropical beach escape, an adventure in the mountains, a cultural journey through ancient cities, or a peaceful retreat in nature, Holiday Time has got you covered. We feature destinations from every corner of the globe - from popular tourist hotspots to hidden gems waiting to be discovered.</p>
+     </div>
+     <div class="glass-card rounded-3xl p-8 mb-8">
+      <h3 class="text-2xl font-bold text-yellow-400 mb-4">What Makes Us Different</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+       <div class="flex gap-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-xl">🎯</span>
+        </div>
+        <div>
+         <h4 class="font-bold text-white mb-2">Personalized Recommendations</h4>
+         <p class="text-gray-400 text-sm">Our smart quiz analyzes your preferences to find destinations that truly match what you're looking for.</p>
+        </div>
+       </div>
+       <div class="flex gap-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-xl">♿</span>
+        </div>
+        <div>
+         <h4 class="font-bold text-white mb-2">Accessibility Focused</h4>
+         <p class="text-gray-400 text-sm">We consider special requirements and accessibility needs to ensure everyone can enjoy their perfect holiday.</p>
+        </div>
+       </div>
+       <div class="flex gap-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-xl">💰</span>
+        </div>
+        <div>
+         <h4 class="font-bold text-white mb-2">Budget Transparency</h4>
+         <p class="text-gray-400 text-sm">Clear pricing information for accommodations, restaurants, and attractions helps you plan within your budget.</p>
+        </div>
+       </div>
+       <div class="flex gap-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-xl">🌍</span>
+        </div>
+        <div>
+         <h4 class="font-bold text-white mb-2">Global Coverage</h4>
+         <p class="text-gray-400 text-sm">195+ countries and territories with detailed information about attractions, hotels, and local experiences.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="glass-card rounded-3xl p-8">
+      <h3 class="text-2xl font-bold text-yellow-400 mb-4">How It Works</h3>
+      <div class="space-y-6">
+       <div class="flex items-start gap-4">
+        <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-slate-900 font-bold flex-shrink-0">
+         1
+        </div>
+        <div>
+         <h4 class="font-bold text-white mb-1">Take Our Quiz</h4>
+         <p class="text-gray-400">Answer 10 simple questions about your travel preferences, climate choices, budget, and special requirements.</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4">
+        <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-slate-900 font-bold flex-shrink-0">
+         2
+        </div>
+        <div>
+         <h4 class="font-bold text-white mb-1">Get Matched</h4>
+         <p class="text-gray-400">Our algorithm analyzes your answers and matches you with destinations that fit your unique profile.</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4">
+        <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-slate-900 font-bold flex-shrink-0">
+         3
+        </div>
+        <div>
+         <h4 class="font-bold text-white mb-1">Explore Details</h4>
+         <p class="text-gray-400">Browse detailed information about your matched destinations including hotels, restaurants, attractions, and recommended airlines.</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4">
+        <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-slate-900 font-bold flex-shrink-0">
+         4
+        </div>
+        <div>
+         <h4 class="font-bold text-white mb-1">Plan Your Trip</h4>
+         <p class="text-gray-400">Use our comprehensive information to plan and book your perfect holiday adventure!</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Modal Container -->
+   <div id="modal-container"></div>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      site_title: 'Holiday Time',
+      tagline: 'Find Your Perfect Escape'
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...config, ...newConfig };
+          updateUI();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['site_title', cfg.site_title || defaultConfig.site_title],
+          ['tagline', cfg.tagline || defaultConfig.tagline]
+        ])
+      });
+    }
+    
+    function updateUI() {
+      document.getElementById('nav-title').textContent = config.site_title || defaultConfig.site_title;
+      document.getElementById('hero-title').innerHTML = `<span class="bg-gradient-to-r from-yellow-300 via-yellow-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg">${config.site_title || defaultConfig.site_title}</span>`;
+      document.getElementById('hero-tagline').textContent = config.tagline || defaultConfig.tagline;
+    }
+    
+    // Destination Data
+    const destinations = [
+      // EUROPE
+      { id: 'france', name: 'France', region: 'europe', climate: 'temperate', budget: 'medium', type: 'culture', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400', flag: '🇫🇷', rating: 5, price: '$150/night', description: 'The land of romance, art, and gastronomy. From the iconic Eiffel Tower to the lavender fields of Provence.' },
+      { id: 'italy', name: 'Italy', region: 'europe', climate: 'temperate', budget: 'medium', type: 'culture', image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=400', flag: '🇮🇹', rating: 5, price: '$140/night', description: 'Home to ancient Rome, Renaissance art, and the world\'s best cuisine. A treasure trove of history and beauty.' },
+      { id: 'spain', name: 'Spain', region: 'europe', climate: 'hot', budget: 'medium', type: 'beach', image: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=400', flag: '🇪🇸', rating: 5, price: '$120/night', description: 'Vibrant culture, stunning beaches, and passionate flamenco. Experience the spirit of España!' },
+      { id: 'greece', name: 'Greece', region: 'europe', climate: 'hot', budget: 'low', type: 'beach', image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=400', flag: '🇬🇷', rating: 5, price: '$100/night', description: 'Ancient ruins, crystal-clear waters, and whitewashed villages. The birthplace of democracy awaits.' },
+      { id: 'germany', name: 'Germany', region: 'europe', climate: 'cold', budget: 'medium', type: 'culture', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400', flag: '🇩🇪', rating: 4, price: '$130/night', description: 'Castles, beer gardens, and efficiency. Explore from the Black Forest to Berlin\'s vibrant nightlife.' },
+      { id: 'uk', name: 'United Kingdom', region: 'europe', climate: 'cold', budget: 'high', type: 'culture', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400', flag: '🇬🇧', rating: 5, price: '$200/night', description: 'Royal palaces, historic pubs, and iconic red buses. Experience British charm and history.' },
+      { id: 'switzerland', name: 'Switzerland', region: 'europe', climate: 'cold', budget: 'high', type: 'adventure', image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400', flag: '🇨🇭', rating: 5, price: '$250/night', description: 'Alpine perfection with chocolate, watches, and stunning mountain scenery. Pure bliss.' },
+      { id: 'netherlands', name: 'Netherlands', region: 'europe', climate: 'cold', budget: 'medium', type: 'culture', image: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=400', flag: '🇳🇱', rating: 4, price: '$140/night', description: 'Tulips, windmills, and artistic heritage. Cycle through Amsterdam\'s charming canals.' },
+      { id: 'portugal', name: 'Portugal', region: 'europe', climate: 'hot', budget: 'low', type: 'beach', image: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400', flag: '🇵🇹', rating: 5, price: '$90/night', description: 'Stunning coastlines, historic Lisbon, and delicious pastéis de nata. Affordable European charm.' },
+      { id: 'norway', name: 'Norway', region: 'europe', climate: 'cold', budget: 'high', type: 'adventure', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400', flag: '🇳🇴', rating: 5, price: '$220/night', description: 'Fjords, Northern Lights, and Viking history. Nature at its most dramatic.' },
+      { id: 'sweden', name: 'Sweden', region: 'europe', climate: 'cold', budget: 'high', type: 'culture', image: 'https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=400', flag: '🇸🇪', rating: 4, price: '$180/night', description: 'Scandinavian design, ABBA, and stunning archipelagos. Modern meets traditional.' },
+      { id: 'austria', name: 'Austria', region: 'europe', climate: 'cold', budget: 'medium', type: 'culture', image: 'https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=400', flag: '🇦🇹', rating: 5, price: '$150/night', description: 'Mozart, alpine scenery, and imperial Vienna. A musical and cultural paradise.' },
+      { id: 'iceland', name: 'Iceland', region: 'europe', climate: 'cold', budget: 'high', type: 'adventure', image: 'https://images.unsplash.com/photo-1520769945061-0a448c463865?w=400', flag: '🇮🇸', rating: 5, price: '$200/night', description: 'Geysers, glaciers, and the Northern Lights. Earth\'s most otherworldly landscapes.' },
+      { id: 'ireland', name: 'Ireland', region: 'europe', climate: 'cold', budget: 'medium', type: 'culture', image: 'https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=400', flag: '🇮🇪', rating: 4, price: '$130/night', description: 'Green rolling hills, ancient castles, and legendary hospitality. Céad míle fáilte!' },
+      { id: 'czech', name: 'Czech Republic', region: 'europe', climate: 'cold', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1541849546-216549ae216d?w=400', flag: '🇨🇿', rating: 4, price: '$80/night', description: 'Fairytale Prague, excellent beer, and Gothic architecture. Eastern European gem.' },
+      { id: 'croatia', name: 'Croatia', region: 'europe', climate: 'hot', budget: 'medium', type: 'beach', image: 'data:image/jpeg;base64,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', flag: '🇭🇷', rating: 5, price: '$110/night', description: 'Adriatic coastline, Game of Thrones locations, and stunning national parks.' },
+      { id: 'poland', name: 'Poland', region: 'europe', climate: 'cold', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=400', flag: '🇵🇱', rating: 4, price: '$70/night', description: 'Historic cities, hearty cuisine, and warm hospitality. Amazing value for money.' },
+      { id: 'hungary', name: 'Hungary', region: 'europe', climate: 'temperate', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1541343672885-9be56236302a?w=400', flag: '🇭🇺', rating: 4, price: '$75/night', description: 'Thermal baths, grand Budapest, and rich history. Eastern Europe\'s crown jewel.' },
+      { id: 'belgium', name: 'Belgium', region: 'europe', climate: 'cold', budget: 'medium', type: 'culture', image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=400', flag: '🇧🇪', rating: 4, price: '$140/night', description: 'Chocolate, waffles, and stunning medieval cities. Small country, big experiences.' },
+      { id: 'denmark', name: 'Denmark', region: 'europe', climate: 'cold', budget: 'high', type: 'culture', image: 'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=400', flag: '🇩🇰', rating: 4, price: '$190/night', description: 'Hygge lifestyle, colorful Copenhagen, and Viking heritage. Scandinavian happiness.' },
+      { id: 'finland', name: 'Finland', region: 'europe', climate: 'cold', budget: 'high', type: 'adventure', image: 'https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?w=400', flag: '🇫🇮', rating: 4, price: '$180/night', description: 'Santa Claus village, saunas, and the world\'s happiest country. Arctic adventures await.' },
+      { id: 'romania', name: 'Romania', region: 'europe', climate: 'temperate', budget: 'low', type: 'adventure', image: 'https://images.unsplash.com/photo-1461360370896-922624d12a74?w=400', flag: '🇷🇴', rating: 4, price: '$60/night', description: 'Dracula\'s castle, Carpathian mountains, and charming villages. Mystical Eastern Europe.' },
+      { id: 'turkey', name: 'Turkey', region: 'europe', climate: 'hot', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=400', flag: '🇹🇷', rating: 5, price: '$70/night', description: 'Where East meets West. Ancient ruins, bustling bazaars, and stunning mosques.' },
+      { id: 'scotland', name: 'Scotland', region: 'europe', climate: 'cold', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1506377585622-bedcbb027afc?w=400', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', rating: 5, price: '$150/night', description: 'Highland castles, lochs, and whisky. Breathtaking landscapes and rich heritage.' },
+      
+      // ASIA
+      { id: 'japan', name: 'Japan', region: 'asia', climate: 'temperate', budget: 'high', type: 'culture', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400', flag: '🇯🇵', rating: 5, price: '$150/night', description: 'Ancient temples, futuristic cities, and cherry blossoms. A perfect blend of tradition and innovation.' },
+      { id: 'thailand', name: 'Thailand', region: 'asia', climate: 'hot', budget: 'low', type: 'beach', image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?w=400', flag: '🇹🇭', rating: 5, price: '$40/night', description: 'Golden temples, pristine beaches, and incredible street food. The Land of Smiles.' },
+      { id: 'indonesia', name: 'Indonesia', region: 'asia', climate: 'hot', budget: 'low', type: 'beach', image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400', flag: '🇮🇩', rating: 5, price: '$50/night', description: 'Bali\'s rice terraces, Komodo dragons, and thousands of islands. Tropical paradise.' },
+      { id: 'vietnam', name: 'Vietnam', region: 'asia', climate: 'hot', budget: 'low', type: 'adventure', image: 'https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=400', flag: '🇻🇳', rating: 5, price: '$35/night', description: 'Ha Long Bay, vibrant cities, and world-class cuisine. Adventure on a budget.' },
+      { id: 'india', name: 'India', region: 'asia', climate: 'hot', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400', flag: '🇮🇳', rating: 5, price: '$40/night', description: 'The Taj Mahal, colorful festivals, and spiritual journeys. A sensory overload.' },
+      { id: 'china', name: 'China', region: 'asia', climate: 'temperate', budget: 'medium', type: 'culture', image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400', flag: '🇨🇳', rating: 5, price: '$80/night', description: 'The Great Wall, Forbidden City, and ancient dynasties. 5000 years of history.' },
+      { id: 'southkorea', name: 'South Korea', region: 'asia', climate: 'temperate', budget: 'medium', type: 'culture', image: 'https://images.unsplash.com/photo-1538485399081-7191377e8241?w=400', flag: '🇰🇷', rating: 5, price: '$100/night', description: 'K-pop, ancient palaces, and delicious BBQ. Modern energy meets tradition.' },
+      { id: 'singapore', name: 'Singapore', region: 'asia', climate: 'hot', budget: 'high', type: 'culture', image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=400', flag: '🇸🇬', rating: 5, price: '$180/night', description: 'Futuristic gardens, world-class food, and pristine streets. Asia\'s garden city.' },
+      { id: 'malaysia', name: 'Malaysia', region: 'asia', climate: 'hot', budget: 'low', type: 'adventure', image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=400', flag: '🇲🇾', rating: 4, price: '$50/night', description: 'Petronas Towers, rainforests, and diverse cultures. Truly Asia.' },
+      { id: 'philippines', name: 'Philippines', region: 'asia', climate: 'hot', budget: 'low', type: 'beach', image: 'https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=400', flag: '🇵🇭', rating: 5, price: '$45/night', description: '7,000+ islands of paradise. Chocolate hills, whale sharks, and friendly locals.' },
+      { id: 'maldives', name: 'Maldives', region: 'asia', climate: 'hot', budget: 'high', type: 'beach', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=400', flag: '🇲🇻', rating: 5, price: '$300/night', description: 'Overwater villas, crystal lagoons, and underwater restaurants. Ultimate luxury.' },
+      { id: 'srilanka', name: 'Sri Lanka', region: 'asia', climate: 'hot', budget: 'low', type: 'adventure', image: 'https://images.unsplash.com/photo-1580910051074-3eb694886f2f?w=400', flag: '🇱🇰', rating: 4, price: '$50/night', description: 'Tea plantations, ancient temples, and wildlife safaris. The Pearl of the Indian Ocean.' },
+      { id: 'nepal', name: 'Nepal', region: 'asia', climate: 'cold', budget: 'low', type: 'adventure', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400', flag: '🇳🇵', rating: 5, price: '$30/night', description: 'Mount Everest, Himalayan treks, and Buddhist monasteries. Adventure heaven.' },
+      { id: 'cambodia', name: 'Cambodia', region: 'asia', climate: 'hot', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1569242840510-9fe6f0112cee?w=400', flag: '🇰🇭', rating: 5, price: '$30/night', description: 'Angkor Wat, rich history, and resilient spirit. Ancient wonders await.' },
+      { id: 'uae', name: 'United Arab Emirates', region: 'asia', climate: 'hot', budget: 'high', type: 'culture', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400', flag: '🇦🇪', rating: 5, price: '$200/night', description: 'Dubai\'s skyline, Abu Dhabi\'s luxury, and desert adventures. Modern Arabia.' },
+      { id: 'bhutan', name: 'Bhutan', region: 'asia', climate: 'cold', budget: 'high', type: 'adventure', image: 'https://images.unsplash.com/photo-1553856622-d1b352e9a211?w=400', flag: '🇧🇹', rating: 5, price: '$250/night', description: 'The happiness kingdom. Tiger\'s Nest monastery and untouched Himalayan beauty.' },
+      { id: 'mongolia', name: 'Mongolia', region: 'asia', climate: 'cold', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1569317002804-ab77bcf1bce4?w=400', flag: '🇲🇳', rating: 4, price: '$80/night', description: 'Endless steppes, nomadic culture, and Genghis Khan\'s legacy. Wild adventures.' },
+      
+      // AFRICA
+      { id: 'egypt', name: 'Egypt', region: 'africa', climate: 'hot', budget: 'medium', type: 'culture', image: 'https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=400', flag: '🇪🇬', rating: 5, price: '$80/night', description: 'Pyramids of Giza, ancient pharaohs, and the Nile. 5000 years of history.' },
+      { id: 'morocco', name: 'Morocco', region: 'africa', climate: 'hot', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=400', flag: '🇲🇦', rating: 5, price: '$60/night', description: 'Magical medinas, Sahara dunes, and vibrant souks. Arabian nights come alive.' },
+      { id: 'southafrica', name: 'South Africa', region: 'africa', climate: 'temperate', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=400', flag: '🇿🇦', rating: 5, price: '$100/night', description: 'Cape Town, safaris, and diverse cultures. The Rainbow Nation.' },
+      { id: 'kenya', name: 'Kenya', region: 'africa', climate: 'hot', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=400', flag: '🇰🇪', rating: 5, price: '$120/night', description: 'The Great Migration, Maasai culture, and stunning landscapes. Safari paradise.' },
+      { id: 'tanzania', name: 'Tanzania', region: 'africa', climate: 'hot', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=400', flag: '🇹🇿', rating: 5, price: '$130/night', description: 'Mount Kilimanjaro, Serengeti, and Zanzibar beaches. Africa\'s treasure chest.' },
+      { id: 'mauritius', name: 'Mauritius', region: 'africa', climate: 'hot', budget: 'high', type: 'beach', image: 'https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=400', flag: '🇲🇺', rating: 5, price: '$180/night', description: 'Turquoise lagoons, luxury resorts, and diverse culture. Indian Ocean paradise.' },
+      { id: 'seychelles', name: 'Seychelles', region: 'africa', climate: 'hot', budget: 'high', type: 'beach', image: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=400', flag: '🇸🇨', rating: 5, price: '$250/night', description: 'Granite boulders, pristine beaches, and rare wildlife. Eden on Earth.' },
+      { id: 'ethiopia', name: 'Ethiopia', region: 'africa', climate: 'temperate', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400', flag: '🇪🇹', rating: 4, price: '$40/night', description: 'Ancient churches, coffee origins, and unique culture. Africa\'s untold story.' },
+      { id: 'namibia', name: 'Namibia', region: 'africa', climate: 'hot', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=400', flag: '🇳🇦', rating: 5, price: '$100/night', description: 'Red dunes, desert elephants, and skeleton coast. Stark, stunning beauty.' },
+      { id: 'botswana', name: 'Botswana', region: 'africa', climate: 'hot', budget: 'high', type: 'adventure', image: 'https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=400', flag: '🇧🇼', rating: 5, price: '$300/night', description: 'Okavango Delta, incredible wildlife, and luxury safaris. Africa\'s best kept secret.' },
+      { id: 'rwanda', name: 'Rwanda', region: 'africa', climate: 'temperate', budget: 'high', type: 'adventure', image: 'https://images.unsplash.com/photo-1580746738099-8c0c6e9a3f1f?w=400', flag: '🇷🇼', rating: 5, price: '$400/night', description: 'Mountain gorillas, stunning hills, and inspiring recovery. The Land of a Thousand Hills.' },
+      { id: 'madagascar', name: 'Madagascar', region: 'africa', climate: 'hot', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1580746738099-8c0c6e9a3f1f?w=400', flag: '🇲🇬', rating: 4, price: '$90/night', description: 'Lemurs, baobabs, and unique biodiversity. Like nowhere else on Earth.' },
+      { id: 'tunisia', name: 'Tunisia', region: 'africa', climate: 'hot', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1590073844006-33379778ae09?w=400', flag: '🇹🇳', rating: 4, price: '$50/night', description: 'Roman ruins, Star Wars locations, and Mediterranean beaches. Ancient meets beach.' },
+      
+      // AMERICAS
+      { id: 'usa', name: 'United States', region: 'americas', climate: 'temperate', budget: 'high', type: 'adventure', image: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=400', flag: '🇺🇸', rating: 5, price: '$180/night', description: 'From NYC to Grand Canyon, endless diversity and iconic experiences. The American Dream.' },
+      { id: 'canada', name: 'Canada', region: 'americas', climate: 'cold', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=400', flag: '🇨🇦', rating: 5, price: '$150/night', description: 'Rocky Mountains, Niagara Falls, and vast wilderness. Nature\'s wonderland.' },
+      { id: 'mexico', name: 'Mexico', region: 'americas', climate: 'hot', budget: 'low', type: 'beach', image: 'https://images.unsplash.com/photo-1512813195386-6cf811ad3542?w=400', flag: '🇲🇽', rating: 5, price: '$70/night', description: 'Ancient Mayans, beautiful beaches, and incredible food. Vibrant culture.' },
+      { id: 'brazil', name: 'Brazil', region: 'americas', climate: 'hot', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400', flag: '🇧🇷', rating: 5, price: '$90/night', description: 'Rio\'s carnival, Amazon rainforest, and stunning beaches. The rhythm of life.' },
+      { id: 'argentina', name: 'Argentina', region: 'americas', climate: 'temperate', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1612294037637-ec328d0e075e?w=400', flag: '🇦🇷', rating: 5, price: '$80/night', description: 'Tango, Patagonia, and incredible steaks. Passion in every corner.' },
+      { id: 'peru', name: 'Peru', region: 'americas', climate: 'temperate', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=400', flag: '🇵🇪', rating: 5, price: '$50/night', description: 'Machu Picchu, Inca heritage, and Amazon adventures. Ancient wonders.' },
+      { id: 'chile', name: 'Chile', region: 'americas', climate: 'cold', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=400', flag: '🇨🇱', rating: 5, price: '$100/night', description: 'Atacama Desert, Patagonia, and Easter Island. Extreme landscapes.' },
+      { id: 'colombia', name: 'Colombia', region: 'americas', climate: 'hot', budget: 'low', type: 'adventure', image: 'https://images.unsplash.com/photo-1518638150340-f706e86654de?w=400', flag: '🇨🇴', rating: 5, price: '$45/night', description: 'Colorful Cartagena, coffee regions, and Caribbean coast. Rising star.' },
+      { id: 'costarica', name: 'Costa Rica', region: 'americas', climate: 'hot', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1580060405266-e55a62b99d6d?w=400', flag: '🇨🇷', rating: 5, price: '$100/night', description: 'Rainforests, wildlife, and pura vida lifestyle. Nature\'s playground.' },
+      { id: 'cuba', name: 'Cuba', region: 'americas', climate: 'hot', budget: 'low', type: 'culture', image: 'https://images.unsplash.com/photo-1500759285222-a95626b934cb?w=400', flag: '🇨🇺', rating: 4, price: '$60/night', description: 'Classic cars, salsa, and revolutionary history. Frozen in time.' },
+      { id: 'jamaica', name: 'Jamaica', region: 'americas', climate: 'hot', budget: 'medium', type: 'beach', image: 'https://images.unsplash.com/photo-1562873704-5e11b3de3d5d?w=400', flag: '🇯🇲', rating: 4, price: '$120/night', description: 'Reggae rhythms, beautiful beaches, and jerk chicken. Island vibes.' },
+      { id: 'ecuador', name: 'Ecuador', region: 'americas', climate: 'temperate', budget: 'low', type: 'adventure', image: 'https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400', flag: '🇪🇨', rating: 4, price: '$40/night', description: 'Galápagos Islands, Amazon jungle, and the equator. Biodiversity hotspot.' },
+      { id: 'bahamas', name: 'Bahamas', region: 'americas', climate: 'hot', budget: 'high', type: 'beach', image: 'https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400', flag: '🇧🇸', rating: 5, price: '$200/night', description: 'Swimming pigs, crystal waters, and luxury resorts. Caribbean paradise.' },
+      { id: 'dominican', name: 'Dominican Republic', region: 'americas', climate: 'hot', budget: 'medium', type: 'beach', image: 'https://images.unsplash.com/photo-1585152968992-d2b9444408cc?w=400', flag: '🇩🇴', rating: 4, price: '$100/night', description: 'All-inclusive resorts, merengue, and colonial history. Caribbean gem.' },
+      { id: 'panama', name: 'Panama', region: 'americas', climate: 'hot', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1518638150340-f706e86654de?w=400', flag: '🇵🇦', rating: 4, price: '$100/night', description: 'Famous canal, modern skyline, and tropical beaches. Crossroads of the Americas.' },
+      
+      // OCEANIA
+      { id: 'australia', name: 'Australia', region: 'oceania', climate: 'hot', budget: 'high', type: 'adventure', image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=400', flag: '🇦🇺', rating: 5, price: '$170/night', description: 'Great Barrier Reef, Outback, and unique wildlife. G\'day mate!' },
+      { id: 'newzealand', name: 'New Zealand', region: 'oceania', climate: 'temperate', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=400', flag: '🇳🇿', rating: 5, price: '$140/night', description: 'Lord of the Rings landscapes, Maori culture, and adventure sports. Middle Earth.' },
+      { id: 'fiji', name: 'Fiji', region: 'oceania', climate: 'hot', budget: 'medium', type: 'beach', image: 'https://images.unsplash.com/photo-1530388090821-bf9e8b76a87a?w=400', flag: '🇫🇯', rating: 5, price: '$150/night', description: 'Tropical paradise, friendly people, and pristine reefs. Bula!' },
+      { id: 'tahiti', name: 'French Polynesia', region: 'oceania', climate: 'hot', budget: 'high', type: 'beach', image: 'https://images.unsplash.com/photo-1589197331516-4d84b72ebde3?w=400', flag: '🇵🇫', rating: 5, price: '$400/night', description: 'Bora Bora, overwater bungalows, and ultimate romance. Paradise found.' },
+      { id: 'papua', name: 'Papua New Guinea', region: 'oceania', climate: 'hot', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1580060405266-e55a62b99d6d?w=400', flag: '🇵🇬', rating: 4, price: '$120/night', description: 'Tribal cultures, diving, and untouched wilderness. Adventure frontier.' },
+      { id: 'samoa', name: 'Samoa', region: 'oceania', climate: 'hot', budget: 'medium', type: 'beach', image: 'https://images.unsplash.com/photo-1530388090821-bf9e8b76a87a?w=400', flag: '🇼🇸', rating: 4, price: '$100/night', description: 'Polynesian culture, waterfalls, and untouched beaches. The heart of Polynesia.' },
+      { id: 'vanuatu', name: 'Vanuatu', region: 'oceania', climate: 'hot', budget: 'medium', type: 'adventure', image: 'https://images.unsplash.com/photo-1580060405266-e55a62b99d6d?w=400', flag: '🇻🇺', rating: 4, price: '$110/night', description: 'Active volcanoes, tribal culture, and incredible diving. Adventure awaits.' }
+    ];
+    
+    // Airlines Data
+    const airlines = [
+      { id: 'emirates', name: 'Emirates', logo: '🇦🇪', rating: 5, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=400', hub: 'Dubai, UAE', description: 'World-renowned for luxury and service excellence. Emirates offers A380 superjumbo aircraft, award-winning in-flight entertainment with over 4,500 channels, gourmet cuisine by world-class chefs, complimentary bar service, and iconic onboard shower spas in First Class. Their extensive network covers 150+ destinations across 6 continents. Known for their luxurious lounges and chauffeur service for premium passengers.', included: ['Gourmet meals & beverages', 'Entertainment system', 'Blankets & amenity kits', 'Wi-Fi (Premium)', 'Lounge access (Business/First)', 'Chauffeur service (First)'] },
+      { id: 'singapore', name: 'Singapore Airlines', logo: '🇸🇬', rating: 5, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1540339832862-474599807836?w=400', hub: 'Singapore', description: 'Consistently ranked among the world\'s best airlines. Features iconic Singapore Girl service, KrisWorld entertainment system with 1,800+ options, Book the Cook service allowing pre-flight meal selection, and world-first Suite Class with double beds. The airline maintains one of the youngest fleets globally and offers the world\'s longest non-stop flight. Their lounges feature fine dining and spa treatments.', included: ['International cuisine', 'Premium entertainment', 'Amenity kits', 'Champagne service', 'SilverKris Lounge access', 'Spa services (First)'] },
+      { id: 'qatar', name: 'Qatar Airways', logo: '🇶🇦', rating: 5, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1583418007992-9ef79ec94573?w=400', hub: 'Doha, Qatar', description: 'Six-time winner of World\'s Best Airline. Famous for Qsuite business class featuring the industry\'s first double beds, privacy doors, and a social dining configuration. Oryx One entertainment offers thousands of hours of content. The Al Mourjan Lounge in Doha spans 10,000 square meters with a spa, dining, and quiet rooms. Operates the most modern fleet with an average age under 5 years.', included: ['Gourmet dining', 'Oryx entertainment', 'Premium amenities', 'Al Mourjan Lounge', 'Pajamas (Business/First)', 'Exclusive Qsuite'] },
+      { id: 'british', name: 'British Airways', logo: '🇬🇧', rating: 4, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=400', hub: 'London Heathrow, UK', description: 'The UK\'s flag carrier with over 100 years of aviation history. Features Club Suite business class with direct aisle access and suite doors. High Life entertainment system and British-inspired menus. Exclusive First Wing at Heathrow offers expedited security and direct lounge access. Avios loyalty program offers excellent redemption value. Known for iconic British service standards.', included: ['Full meal service', 'Entertainment', 'Amenity kits', 'Lounge access (Premium)', 'Fast track security', 'Speedy boarding'] },
+      { id: 'lufthansa', name: 'Lufthansa', logo: '🇩🇪', rating: 4, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=400', hub: 'Frankfurt, Germany', description: 'Germany\'s largest airline and a founding member of Star Alliance. Features award-winning First Class Terminal in Frankfurt with personal assistants, fine dining, and direct limousine service to aircraft. Business Class offers lie-flat beds and German hospitality. Renowned for precision, reliability, and an extensive European network. Senator and HON Circle lounges rank among the world\'s best.', included: ['German cuisine', 'Entertainment system', 'Travel kits', 'FCT access (First)', 'Senator Lounge', 'Miles & More rewards'] },
+      { id: 'airfrance', name: 'Air France', logo: '🇫🇷', rating: 4, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=400', hub: 'Paris Charles de Gaulle, France', description: 'The elegant French flag carrier offering refined service and French gastronomy at 35,000 feet. La Première (First Class) features chef-designed menus and exclusive lounges with Clarins spas. Business Class offers lie-flat beds and priority services. Known for sophisticated French style, champagne service, and connections through the beautiful CDG airport. Flying Blue program offers excellent redemption options.', included: ['French cuisine & champagne', 'In-flight entertainment', 'Clarins amenity kits', 'Lounge with spa', 'Priority boarding', 'Flying Blue miles'] },
+      { id: 'ana', name: 'ANA - All Nippon Airways', logo: '🇯🇵', rating: 5, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1540339832862-474599807836?w=400', hub: 'Tokyo, Japan', description: 'Japan\'s largest airline, famous for impeccable Japanese hospitality (omotenashi). The Room business class offers exceptional privacy and comfort. First Class features Japanese chef collaboration menus and exclusive amenities. ANA Lounge offers traditional Japanese elements including sake bars. Known for consistent on-time performance, immaculate cleanliness, and attention to detail.', included: ['Japanese & international cuisine', 'Premium entertainment', 'Japanese amenities', 'ANA Lounge access', 'Sake bar', 'Omotenashi service'] },
+      { id: 'cathay', name: 'Cathay Pacific', logo: '🇭🇰', rating: 5, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=400', hub: 'Hong Kong', description: 'Hong Kong\'s premier airline known for exceptional service and strategic Asian connectivity. Business Class features industry-leading seats and extensive food choices. The Pier and Wing lounges in Hong Kong are award-winning with noodle bars and cabanas. Strong network throughout Asia-Pacific. Marco Polo Club loyalty program offers excellent benefits.', included: ['Asian & Western cuisine', 'StudioCX entertainment', 'Aesop amenity kits', 'Pier/Wing Lounge', 'Noodle bar access', 'Cabanas (First)'] },
+      { id: 'etihad', name: 'Etihad Airways', logo: '🇦🇪', rating: 5, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1583418007992-9ef79ec94573?w=400', hub: 'Abu Dhabi, UAE', description: 'The national airline of UAE offering innovative luxury experiences. The Residence, available on A380s, is a three-room suite with bedroom, living room, and private bathroom with shower. First Class features dining on demand and personal Concierge service. Business Class studios offer direct aisle access. Etihad Wellness program includes sleep amenities and healthy meal options.', included: ['Dining on demand', 'E-BOX entertainment', 'Premium amenity kits', 'First Lounge & Spa', 'Concierge service', 'The Residence suite'] },
+      { id: 'turkish', name: 'Turkish Airlines', logo: '🇹🇷', rating: 4, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=400', hub: 'Istanbul, Turkey', description: 'Flies to more countries than any other airline with exceptional Turkish hospitality. Award-winning business class lounge in Istanbul spans 6,000 sqm with golf simulator, cinema, and sleeping rooms. Do&Co catering provides gourmet Turkish and international cuisine. Miles&Smiles program offers excellent value. Known for generous baggage allowances and connectivity.', included: ['Do&Co gourmet cuisine', 'Planet entertainment', 'Turkish delights', 'IST Lounge access', 'Turkish bath amenities', 'Chef on board'] },
+      { id: 'delta', name: 'Delta Air Lines', logo: '🇺🇸', rating: 4, type: 'Standard', allInclusive: false, image: 'https://images.unsplash.com/photo-1540339832862-474599807836?w=400', hub: 'Atlanta, USA', description: 'America\'s most reliable major airline with extensive domestic and international network. Delta One suites feature sliding doors and premium bedding. Delta Sky Club lounges offer craft cocktails and healthy food options. Known for operational excellence, customer service recovery, and industry-leading technology. SkyMiles program partners with extensive hotel and car rental options.', included: ['Complimentary snacks', 'In-flight entertainment', 'Wi-Fi purchase available', 'Sky Club (Premium)', 'Priority boarding', 'SkyMiles rewards'] },
+      { id: 'united', name: 'United Airlines', logo: '🇺🇸', rating: 4, type: 'Standard', allInclusive: false, image: 'https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=400', hub: 'Chicago & Newark, USA', description: 'One of the world\'s largest airlines with extensive global network. Polaris business class features custom bedding by Saks Fifth Avenue. United Club lounges are being refreshed with modern amenities. Strong Asia-Pacific presence and Star Alliance benefits. MileagePlus program offers excellent award availability.', included: ['Snack service', 'Personal entertainment', 'Wi-Fi available', 'United Club (Premium)', 'Economy Plus option', 'MileagePlus rewards'] },
+      { id: 'american', name: 'American Airlines', logo: '🇺🇸', rating: 3, type: 'Standard', allInclusive: false, image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=400', hub: 'Dallas & Miami, USA', description: 'The world\'s largest airline by fleet size. Flagship First and Business offer premium transcontinental and international service. Admirals Club lounges throughout the network. Strong presence in Latin America and Caribbean. AAdvantage is one of the oldest frequent flyer programs with Oneworld alliance benefits.', included: ['Complimentary snacks', 'Entertainment', 'Wi-Fi purchase', 'Flagship Lounge (Premium)', 'Priority boarding', 'AAdvantage miles'] },
+      { id: 'swiss', name: 'Swiss International', logo: '🇨🇭', rating: 4, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1540339832862-474599807836?w=400', hub: 'Zurich, Switzerland', description: 'Switzerland\'s flagship carrier known for precision and Swiss chocolate. Business Class features excellent seats and SWISS Taste of Switzerland regional cuisine. First Class offers caviar service and La Prairie amenities. Alpine-inspired lounges serve fondue and Swiss specialties. Known for punctuality and efficiency.', included: ['Swiss cuisine', 'SWISS entertainment', 'La Prairie amenities', 'SWISS Lounges', 'Swiss chocolate', 'First Class caviar'] },
+      { id: 'klm', name: 'KLM Royal Dutch', logo: '🇳🇱', rating: 4, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=400', hub: 'Amsterdam Schiphol', description: 'The world\'s oldest airline still operating under its original name. World Business Class features Hella Jongerius-designed seats. Crown Lounge at Schiphol offers Dutch hospitality. Famous for Delft Blue houses gifted to World Business passengers. Efficient hub at Schiphol airport. Flying Blue program shared with Air France.', included: ['Dutch & international cuisine', 'In-flight entertainment', 'Delft Blue houses', 'Crown Lounge', 'Flying Blue miles', 'Heineken bar'] },
+      { id: 'eva', name: 'EVA Air', logo: '🇹🇼', rating: 5, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1540339832862-474599807836?w=400', hub: 'Taipei, Taiwan', description: 'Taiwan\'s premium carrier with Hello Kitty themed aircraft. Royal Laurel Class features excellent privacy and Rimowa amenities. Premium Laurel offers business class at premium economy prices. Known for exceptional cleanliness, friendly service, and consistent quality. Strong network throughout Asia-Pacific.', included: ['Taiwanese & international cuisine', 'Star Gallery entertainment', 'Rimowa amenities', 'Infinity Lounge', 'Hello Kitty flights', 'Premium Laurel service'] },
+      { id: 'virgin', name: 'Virgin Atlantic', logo: '🇬🇧', rating: 4, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1583418007992-9ef79ec94573?w=400', hub: 'London Heathrow', description: 'Richard Branson\'s stylish airline known for innovative service and fun atmosphere. Upper Class features the longest fully flat beds and onboard bar. Clubhouse lounges are legendary with spa treatments, dining, and even haircuts. Premium economy sets industry standards. Known for quirky service touches and excellent value.', included: ['Celebrity chef menus', 'Vera entertainment', 'Rituals amenity kits', 'Clubhouse spa & bar', 'Social seating', 'Premium Sonic experience'] },
+      { id: 'qantas', name: 'Qantas', logo: '🇦🇺', rating: 4, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=400', hub: 'Sydney, Australia', description: 'Australia\'s iconic flying kangaroo and the world\'s safest airline. First Class features Neil Perry-designed menus and pajamas. Business Class suites offer excellent privacy. Famous Qantas Lounges feature Neil Perry\'s Rockpool dining. Operates the world\'s longest non-stop commercial flight to London.', included: ['Neil Perry cuisine', 'In-flight entertainment', 'SKII amenities (First)', 'Qantas Lounge dining', 'Australian wines', 'Frequent Flyer rewards'] },
+      { id: 'finnair', name: 'Finnair', logo: '🇫🇮', rating: 4, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=400', hub: 'Helsinki, Finland', description: 'The fastest connection between Europe and Asia via Helsinki. Business Class features Nordic design and Marimekko textiles. Known for sustainable practices and modern Finnair Lounges. Exceptional Lapland routes for Northern Lights experiences. Efficient connections with minimal waiting times.', included: ['Nordic cuisine', 'Nordic Sky entertainment', 'Marimekko amenities', 'Finnair Lounge', 'Finnish design', 'Aurora experience'] },
+      { id: 'korean', name: 'Korean Air', logo: '🇰🇷', rating: 5, type: 'Premium', allInclusive: true, image: 'https://images.unsplash.com/photo-1540339832862-474599807836?w=400', hub: 'Seoul Incheon, Korea', description: 'South Korea\'s largest airline with impeccable Korean service. Prestige Suites feature enclosed suites with mood lighting. First Class offers Korean royal cuisine and Bvlgari amenities. KAL Lounge at Incheon is stunning with traditional Korean elements. Known for excellent food quality and service consistency.', included: ['Korean royal cuisine', 'In-flight entertainment', 'Bvlgari amenities', 'KAL Lounge', 'Bibimbap service', 'Prestige Sleeper'] }
+    ];
+    
+    // Attractions Data
+    const attractions = [
+      { id: 'eiffel', name: 'Eiffel Tower', location: 'Paris, France', image: 'https://images.unsplash.com/photo-1511739001486-6bfe10ce65f4?w=400', price: '$28', rating: 5, description: 'The iconic iron lattice tower standing 330 meters tall. Built in 1889 for the World\'s Fair, it offers breathtaking views of Paris from its three observation decks. Visit at night to see the hourly sparkling light show. The Gustave Eiffel apartment at the top is a hidden gem.' },
+      { id: 'colosseum', name: 'Colosseum', location: 'Rome, Italy', image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400', price: '$18', rating: 5, description: 'The largest ancient amphitheater ever built, capable of holding 80,000 spectators. Built in AD 70-80, it hosted gladiatorial contests and public spectacles. Underground tours reveal where gladiators and animals were kept. A UNESCO World Heritage Site and one of the New Seven Wonders of the World.' },
+      { id: 'greatwall', name: 'Great Wall of China', location: 'Beijing, China', image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400', price: '$8', rating: 5, description: 'The world\'s longest man-made structure stretching over 13,000 miles. Built over centuries to protect Chinese states from invasions. The most popular sections include Badaling (most accessible), Mutianyu (restored), and Jinshanling (photographers\' favorite). Visible from space is a myth, but the views from the wall are spectacular.' },
+      { id: 'tajmahal', name: 'Taj Mahal', location: 'Agra, India', image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=400', price: '$15', rating: 5, description: 'An ivory-white marble mausoleum built by Mughal Emperor Shah Jahan for his wife Mumtaz Mahal. Completed in 1653, it took 22 years and 20,000 artisans to build. Best viewed at sunrise when the marble glows pink. The symmetry and intricate inlay work make it one of the world\'s most perfect buildings.' },
+      { id: 'machupicchu', name: 'Machu Picchu', location: 'Cusco, Peru', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=400', price: '$50', rating: 5, description: 'The 15th-century Inca citadel set high in the Andes Mountains. "Discovered" in 1911, it showcases incredible dry-stone construction. Hike the Inca Trail for the classic approach, or take the train to Aguas Calientes. The Temple of the Sun and Intihuatana stone are astronomical marvels.' },
+      { id: 'petra', name: 'Petra', location: 'Jordan', image: 'https://images.unsplash.com/photo-1579606032821-4e6161c81571?w=400', price: '$70', rating: 5, description: 'The ancient Nabataean city carved into rose-red cliffs. The Treasury (Al-Khazneh) is the iconic facade featured in Indiana Jones. Beyond it lies an entire city with tombs, temples, and a Roman-style theater. Petra by Night illuminates the Treasury with thousands of candles.' },
+      { id: 'grandcanyon', name: 'Grand Canyon', location: 'Arizona, USA', image: 'https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?w=400', price: '$35', rating: 5, description: 'A steep-sided canyon carved by the Colorado River over 6 million years. The South Rim is most popular with accessible viewpoints, while the North Rim offers solitude. The Skywalk glass bridge extends over the canyon. Rafting the Colorado River takes 3-18 days.' },
+      { id: 'christredeemer', name: 'Christ the Redeemer', location: 'Rio de Janeiro, Brazil', image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400', price: '$22', rating: 5, description: 'The Art Deco statue of Jesus Christ standing 30 meters tall atop Corcovado Mountain. Completed in 1931, it has become a symbol of Rio and Brazil. Take the cog train through Tijuca Forest or hike up. The panoramic views of Copacabana, Sugarloaf, and the city are unforgettable.' },
+      { id: 'sagrada', name: 'Sagrada Familia', location: 'Barcelona, Spain', image: 'https://images.unsplash.com/photo-1583779457491-d7e93f8c86c3?w=400', price: '$26', rating: 5, description: 'Antoni Gaudí\'s unfinished masterpiece, under construction since 1882. Expected completion is 2026, the centenary of Gaudí\'s death. The interior features tree-like columns and stunning stained glass that creates rainbow light. The towers offer views over Barcelona.' },
+      { id: 'angkorwat', name: 'Angkor Wat', location: 'Siem Reap, Cambodia', image: 'https://images.unsplash.com/photo-1569242840510-9fe6f0112cee?w=400', price: '$37', rating: 5, description: 'The world\'s largest religious monument, originally Hindu, now Buddhist. Built in the 12th century by King Suryavarman II. Watch sunrise over the iconic silhouette reflected in the moat. Beyond the main temple, explore the jungle-covered Ta Prohm and the faces of Bayon.' },
+      { id: 'pyramids', name: 'Pyramids of Giza', location: 'Cairo, Egypt', image: 'https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=400', price: '$20', rating: 5, description: 'The last surviving wonder of the ancient world. The Great Pyramid was the tallest man-made structure for 3,800 years. Enter the chambers (not for claustrophobic visitors) and see the Solar Boat Museum. The Sphinx guards the complex. Night sound and light shows tell ancient stories.' },
+      { id: 'aurora', name: 'Northern Lights', location: 'Norway/Iceland/Finland', image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400', price: 'Free', rating: 5, description: 'The natural light display in Arctic skies caused by charged particles from the sun. Best viewed September-March in Norway\'s Tromsø, Finland\'s Lapland, or Iceland. Stay in glass igloos or Northern Lights hotels for comfortable viewing. The dancing green, pink, and purple lights are truly magical.' },
+      { id: 'santorini', name: 'Santorini Caldera', location: 'Greece', image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=400', price: 'Free', rating: 5, description: 'The stunning volcanic caldera with white-washed buildings and blue domes. Created by one of history\'s largest volcanic eruptions around 1600 BCE. Watch the famous sunset from Oia, explore ancient Akrotiri, or swim in hot springs. The views from clifftop restaurants are unmatched.' },
+      { id: 'niagara', name: 'Niagara Falls', location: 'USA/Canada', image: 'https://images.unsplash.com/photo-1489447068241-b3490214e879?w=400', price: '$25', rating: 5, description: 'Three waterfalls straddling the US-Canadian border. Horseshoe Falls is the most powerful, with 750,000 gallons flowing per second. Take the Maid of the Mist boat or walk behind the falls. The illumination at night and fireworks in summer are spectacular.' },
+      { id: 'mountfuji', name: 'Mount Fuji', location: 'Japan', image: 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=400', price: 'Free', rating: 5, description: 'Japan\'s highest peak and an active volcano last erupting in 1707. A sacred site and UNESCO World Heritage location. The climbing season is July-August. View it from the Chureito Pagoda, Lake Kawaguchiko, or the bullet train. Cherry blossoms frame it perfectly in spring.' }
+    ];
+    
+    // Quiz Data
+    const quizQuestions = [
+      {
+        question: "What climate do you prefer?",
+        options: [
+          { text: "Hot & Sunny - Give me beaches and sun!", value: "hot" },
+          { text: "Cold & Snowy - I love winter wonderlands!", value: "cold" },
+          { text: "Mild & Temperate - Not too hot, not too cold", value: "temperate" },
+          { text: "I like variety - Mix it up!", value: "any" }
+        ]
+      },
+      {
+        question: "What's your budget range?",
+        options: [
+          { text: "Budget-friendly - Keep costs low", value: "low" },
+          { text: "Mid-range - Comfortable but reasonable", value: "medium" },
+          { text: "Luxury - I want the best experience", value: "high" },
+          { text: "Flexible - Budget isn't a concern", value: "any" }
+        ]
+      },
+      {
+        question: "What type of holiday do you prefer?",
+        options: [
+          { text: "Beach & Relaxation - Sand between my toes", value: "beach" },
+          { text: "Adventure & Nature - Hiking and exploring", value: "adventure" },
+          { text: "Culture & History - Museums and landmarks", value: "culture" },
+          { text: "Mix of everything!", value: "any" }
+        ]
+      },
+      {
+        question: "How do you feel about crowded tourist spots?",
+        options: [
+          { text: "Love them! More people, more fun", value: "popular" },
+          { text: "Prefer hidden gems and quiet places", value: "hidden" },
+          { text: "Don't mind either way", value: "any" }
+        ]
+      },
+      {
+        question: "What's most important in accommodation?",
+        options: [
+          { text: "Affordable & Clean - Just need a place to sleep", value: "budget" },
+          { text: "Comfortable & Well-located - Good value", value: "comfort" },
+          { text: "Luxurious & Special - Memorable stays", value: "luxury" },
+          { text: "Unique experiences - Treehouses, igloos, etc.", value: "unique" }
+        ]
+      },
+      {
+        question: "How important is food in your travels?",
+        options: [
+          { text: "Very! Food is a huge part of my trip", value: "foodie" },
+          { text: "I enjoy trying local food but it's not the priority", value: "casual" },
+          { text: "I prefer familiar foods I know", value: "comfort" },
+          { text: "I have dietary restrictions to consider", value: "dietary" }
+        ]
+      },
+      {
+        question: "Do you have any special requirements?",
+        options: [
+          { text: "Wheelchair accessibility needed", value: "accessible" },
+          { text: "Traveling with young children", value: "family" },
+          { text: "Senior-friendly options preferred", value: "senior" },
+          { text: "No special requirements", value: "none" }
+        ]
+      },
+      {
+        question: "How long is your ideal trip?",
+        options: [
+          { text: "Quick getaway (2-4 days)", value: "short" },
+          { text: "Week-long escape (5-7 days)", value: "week" },
+          { text: "Extended adventure (2+ weeks)", value: "long" },
+          { text: "I'm flexible with timing", value: "any" }
+        ]
+      },
+      {
+        question: "What activities interest you most?",
+        options: [
+          { text: "Water sports - Diving, surfing, swimming", value: "water" },
+          { text: "Wildlife & Nature - Safaris and national parks", value: "wildlife" },
+          { text: "City exploration - Shopping, dining, nightlife", value: "city" },
+          { text: "Wellness & Spa - Relaxation and rejuvenation", value: "wellness" }
+        ]
+      },
+      {
+        question: "How do you prefer to travel?",
+        options: [
+          { text: "Solo adventure", value: "solo" },
+          { text: "Romantic couple's trip", value: "couple" },
+          { text: "Family vacation", value: "family" },
+          { text: "Friends group trip", value: "friends" }
+        ]
+      }
+    ];
+    
+    let currentQuestion = 0;
+    let quizAnswers = {};
+    let selectedOption = null;
+    let currentRegionFilter = 'all';
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQuizQuestion();
+      renderDestinations();
+      renderAirlines();
+      renderAttractions();
+    });
+    
+    // Navigation
+    function showSection(section) {
+      const sections = ['home', 'quiz', 'destinations', 'airlines', 'attractions', 'about'];
+      sections.forEach(s => {
+        document.getElementById(`${s}-section`).classList.add('hidden');
+      });
+      document.getElementById(`${section}-section`).classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+    
+    // Quiz Functions
+    function renderQuizQuestion() {
+      const question = quizQuestions[currentQuestion];
+      document.getElementById('quiz-question').textContent = question.question;
+      document.getElementById('quiz-progress-text').textContent = `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+      document.getElementById('quiz-percentage').textContent = `${Math.round(((currentQuestion + 1) / quizQuestions.length) * 100)}%`;
+      document.getElementById('quiz-progress-bar').style.width = `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+      
+      const optionsHtml = question.options.map((opt, idx) => `
+        <button onclick="selectOption(${idx})" 
+                class="quiz-option p-4 rounded-xl text-left transition-all duration-300 ${selectedOption === idx ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-slate-900 font-bold' : 'bg-slate-700 hover:bg-slate-600 text-white'}" 
+                data-index="${idx}">
+          ${opt.text}
+        </button>
+      `).join('');
+      
+      document.getElementById('quiz-options').innerHTML = optionsHtml;
+      
+      document.getElementById('quiz-prev').disabled = currentQuestion === 0;
+      document.getElementById('quiz-next').textContent = currentQuestion === quizQuestions.length - 1 ? 'See Results' : 'Next';
+    }
+    
+    function selectOption(idx) {
+      selectedOption = idx;
+      quizAnswers[currentQuestion] = quizQuestions[currentQuestion].options[idx].value;
+      
+      document.querySelectorAll('.quiz-option').forEach((btn, i) => {
+        if (i === idx) {
+          btn.className = 'quiz-option p-4 rounded-xl text-left transition-all duration-300 bg-gradient-to-r from-yellow-400 to-yellow-500 text-slate-900 font-bold';
+        } else {
+          btn.className = 'quiz-option p-4 rounded-xl text-left transition-all duration-300 bg-slate-700 hover:bg-slate-600 text-white';
+        }
+      });
+    }
+    
+    function nextQuestion() {
+      if (selectedOption === null) {
+        // Show inline message instead of alert
+        const btn = document.getElementById('quiz-next');
+        const originalText = btn.textContent;
+        btn.textContent = 'Please select an option';
+        btn.classList.add('bg-red-500');
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.classList.remove('bg-red-500');
+        }, 2000);
+        return;
+      }
+      
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        selectedOption = quizAnswers[currentQuestion] !== undefined ? 
+          quizQuestions[currentQuestion].options.findIndex(o => o.value === quizAnswers[currentQuestion]) : null;
+        renderQuizQuestion();
+      } else {
+        showResults();
+      }
+    }
+    
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        selectedOption = quizAnswers[currentQuestion] !== undefined ? 
+          quizQuestions[currentQuestion].options.findIndex(o => o.value === quizAnswers[currentQuestion]) : null;
+        renderQuizQuestion();
+      }
+    }
+    
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      
+      const matchedDestinations = findMatchingDestinations();
+      
+      const resultsHtml = `
+        <div class="glass-card rounded-3xl p-8 animate-slide-up">
+          <div class="text-center mb-8">
+            <div class="text-6xl mb-4">🎉</div>
+            <h2 class="text-3xl font-bold text-yellow-400 mb-2">Your Perfect Destinations!</h2>
+            <p class="text-gray-300">Based on your preferences, we found these amazing matches for you</p>
+          </div>
+          
+          <div class="space-y-6">
+            ${matchedDestinations.slice(0, 5).map((dest, idx) => `
+              <div class="glass-card rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="openDestinationModal('${dest.id}')">
+                <div class="flex flex-col md:flex-row">
+                  <div class="md:w-1/3 h-48 md:h-auto overflow-hidden">
+                    <img src="${dest.image}" alt="${dest.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #3B82F6, #8B5CF6)'; this.alt='${dest.name}';">
+                  </div>
+                  <div class="p-6 flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="text-3xl">${dest.flag}</span>
+                      <h3 class="text-2xl font-bold text-yellow-400">${dest.name}</h3>
+                      ${idx === 0 ? '<span class="bg-yellow-400 text-slate-900 px-3 py-1 rounded-full text-sm font-bold">Best Match</span>' : ''}
+                    </div>
+                    <p class="text-gray-300 mb-4">${dest.description}</p>
+                    <div class="flex flex-wrap gap-3">
+                      <span class="bg-blue-500/30 text-blue-300 px-3 py-1 rounded-full text-sm">${dest.climate}</span>
+                      <span class="bg-green-500/30 text-green-300 px-3 py-1 rounded-full text-sm">${dest.budget} budget</span>
+                      <span class="bg-purple-500/30 text-purple-300 px-3 py-1 rounded-full text-sm">${dest.type}</span>
+                      <span class="text-yellow-400 font-bold">${dest.price}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+            <button onclick="restartQuiz()" class="px-6 py-3 bg-slate-700 text-white font-medium rounded-full hover:bg-slate-600 transition">
+              Take Quiz Again
+            </button>
+            <button onclick="showSection('destinations')" class="px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-slate-900 font-bold rounded-full hover:from-yellow-300 hover:to-yellow-400 transition">
+              Browse All Destinations
+            </button>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('quiz-results').innerHTML = resultsHtml;
+      document.getElementById('quiz-results').classList.remove('hidden');
+    }
+    
+    function findMatchingDestinations() {
+      let scored = destinations.map(dest => {
+        let score = 0;
+        
+        // Climate matching - CRITICAL
+        if (quizAnswers[0] === dest.climate) score += 30;
+        else if (quizAnswers[0] === 'any') score += 15;
+        
+        // Budget matching
+        if (quizAnswers[1] === dest.budget) score += 25;
+        else if (quizAnswers[1] === 'any') score += 12;
+        
+        // Type matching
+        if (quizAnswers[2] === dest.type) score += 20;
+        else if (quizAnswers[2] === 'any') score += 10;
+        
+        // Rating bonus
+        score += dest.rating * 2;
+        
+        // Randomize a bit to avoid showing same results
+        score += Math.random() * 5;
+        
+        return { ...dest, score };
+      });
+      
+      return scored.sort((a, b) => b.score - a.score);
+    }
+    
+    function restartQuiz() {
+      currentQuestion = 0;
+      quizAnswers = {};
+      selectedOption = null;
+      document.getElementById('quiz-results').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      renderQuizQuestion();
+    }
+    
+    // Destinations Functions
+    function renderDestinations() {
+      const grid = document.getElementById('destinations-grid');
+      const filteredDests = filterDestinationsList();
+      
+      if (filteredDests.length === 0) {
+        grid.innerHTML = '';
+        document.getElementById('no-results').classList.remove('hidden');
+        return;
+      }
+      
+      document.getElementById('no-results').classList.add('hidden');
+      
+      grid.innerHTML = filteredDests.map(dest => `
+        <div class="destination-card glass-card rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="openDestinationModal('${dest.id}')">
+          <div class="h-40 overflow-hidden relative">
+            <img src="${dest.image}" alt="${dest.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #3B82F6, #8B5CF6)'; this.alt='${dest.name}';">
+            <div class="absolute top-3 left-3 text-3xl">${dest.flag}</div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-lg text-yellow-400">${dest.name}</h3>
+            <p class="text-gray-400 text-sm capitalize">${dest.region}</p>
+            <div class="flex items-center justify-between mt-2">
+              <span class="star-rating">${'★'.repeat(dest.rating)}${'☆'.repeat(5-dest.rating)}</span>
+              <span class="text-sm text-green-400 font-medium">${dest.price}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function filterDestinationsList() {
+      const search = document.getElementById('destination-search')?.value.toLowerCase() || '';
+      
+      return destinations.filter(dest => {
+        const matchesSearch = dest.name.toLowerCase().includes(search) || 
+                             dest.region.toLowerCase().includes(search) ||
+                             dest.description.toLowerCase().includes(search);
+        const matchesRegion = currentRegionFilter === 'all' || dest.region === currentRegionFilter;
+        return matchesSearch && matchesRegion;
+      });
+    }
+    
+    function filterDestinations() {
+      renderDestinations();
+    }
+    
+    function filterByRegion(region) {
+      currentRegionFilter = region;
+      
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.dataset.region === region) {
+          btn.className = 'filter-btn px-4 py-2 bg-yellow-400 text-slate-900 rounded-full font-medium hover:bg-yellow-300 transition';
+        } else {
+          btn.className = 'filter-btn px-4 py-2 bg-slate-700 text-white rounded-full font-medium hover:bg-slate-600 transition';
+        }
+      });
+      
+      renderDestinations();
+    }
+    
+    // Airlines Functions
+    function renderAirlines() {
+      const grid = document.getElementById('airlines-grid');
+      
+      grid.innerHTML = airlines.map(airline => `
+        <div class="glass-card rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="openAirlineModal('${airline.id}')">
+          <div class="h-40 overflow-hidden relative">
+            <img src="${airline.image}" alt="${airline.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1E3A5F, #3B82F6)'; this.alt='${airline.name}';">
+            <div class="absolute top-3 right-3 text-4xl">${airline.logo}</div>
+            <div class="absolute bottom-3 left-3">
+              <span class="${airline.allInclusive ? 'bg-green-500' : 'bg-blue-500'} text-white px-3 py-1 rounded-full text-sm font-bold">
+                ${airline.allInclusive ? 'All-Inclusive' : 'Standard'}
+              </span>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-lg text-yellow-400">${airline.name}</h3>
+            <p class="text-gray-400 text-sm">${airline.hub}</p>
+            <div class="flex items-center justify-between mt-2">
+              <span class="star-rating">${'★'.repeat(airline.rating)}${'☆'.repeat(5-airline.rating)}</span>
+              <span class="text-sm ${airline.type === 'Premium' ? 'text-yellow-400' : 'text-blue-400'} font-medium">${airline.type}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    // Attractions Functions
+    function renderAttractions() {
+      const grid = document.getElementById('attractions-grid');
+      
+      grid.innerHTML = attractions.map(attr => `
+        <div class="glass-card rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="openAttractionModal('${attr.id}')">
+          <div class="h-48 overflow-hidden">
+            <img src="${attr.image}" alt="${attr.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #F59E0B, #EF4444)'; this.alt='${attr.name}';">
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-lg text-yellow-400">${attr.name}</h3>
+            <p class="text-gray-400 text-sm">${attr.location}</p>
+            <div class="flex items-center justify-between mt-2">
+              <span class="star-rating">${'★'.repeat(attr.rating)}${'☆'.repeat(5-attr.rating)}</span>
+              <span class="text-sm text-green-400 font-bold">${attr.price}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    // Modal Functions
+    function openDestinationModal(id) {
+      const dest = destinations.find(d => d.id === id);
+      if (!dest) return;
+      
+      const modalHtml = `
+        <div class="modal-overlay" onclick="closeModal(event)">
+          <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="relative">
+              <img src="${dest.image}" alt="${dest.name}" class="w-full h-64 object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #3B82F6, #8B5CF6)'; this.alt='${dest.name}';">
+              <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-slate-900/80 rounded-full flex items-center justify-center hover:bg-slate-800 transition">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+              <div class="absolute bottom-4 left-4 flex items-center gap-3">
+                <span class="text-5xl">${dest.flag}</span>
+                <div>
+                  <h2 class="text-3xl font-bold text-white drop-shadow-lg">${dest.name}</h2>
+                  <p class="text-white/80 capitalize">${dest.region}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-6 scroll-container">
+              <div class="flex flex-wrap gap-3 mb-6">
+                <span class="bg-blue-500/30 text-blue-300 px-4 py-2 rounded-full font-medium">${dest.climate} climate</span>
+                <span class="bg-green-500/30 text-green-300 px-4 py-2 rounded-full font-medium">${dest.budget} budget</span>
+                <span class="bg-purple-500/30 text-purple-300 px-4 py-2 rounded-full font-medium">${dest.type}</span>
+                <span class="star-rating text-lg">${'★'.repeat(dest.rating)}${'☆'.repeat(5-dest.rating)}</span>
+              </div>
+              
+              <h3 class="text-xl font-bold text-yellow-400 mb-3">About ${dest.name}</h3>
+              <p class="text-gray-300 mb-6 leading-relaxed">${dest.description}</p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="bg-slate-800/50 p-4 rounded-xl">
+                  <h4 class="font-bold text-white mb-2">Accommodation</h4>
+                  <p class="text-gray-400 text-sm mb-2">Starting from <span class="text-green-400 font-bold">${dest.price}</span></p>
+                  <p class="text-gray-400 text-sm">Budget hostels to luxury resorts available</p>
+                </div>
+                <div class="bg-slate-800/50 p-4 rounded-xl">
+                  <h4 class="font-bold text-white mb-2">Best Time to Visit</h4>
+                  <p class="text-gray-400 text-sm">${dest.climate === 'hot' ? 'November - March' : dest.climate === 'cold' ? 'December - February' : 'April - October'}</p>
+                </div>
+              </div>
+              
+              <h3 class="text-xl font-bold text-yellow-400 mb-3">Sample Hotels</h3>
+              <div class="space-y-3 mb-6">
+                <div class="flex justify-between items-center bg-slate-800/50 p-3 rounded-lg">
+                  <div>
+                    <p class="font-medium text-white">Budget Inn</p>
+                    <span class="text-yellow-400 text-sm">★★☆☆☆</span>
+                  </div>
+                  <span class="text-green-400 font-bold">$30/night</span>
+                </div>
+                <div class="flex justify-between items-center bg-slate-800/50 p-3 rounded-lg">
+                  <div>
+                    <p class="font-medium text-white">Comfort Hotel</p>
+                    <span class="text-yellow-400 text-sm">★★★☆☆</span>
+                  </div>
+                  <span class="text-green-400 font-bold">$80/night</span>
+                </div>
+                <div class="flex justify-between items-center bg-slate-800/50 p-3 rounded-lg">
+                  <div>
+                    <p class="font-medium text-white">Luxury Resort & Spa</p>
+                    <span class="text-yellow-400 text-sm">★★★★★</span>
+                  </div>
+                  <span class="text-green-400 font-bold">$250/night</span>
+                </div>
+              </div>
+              
+              <h3 class="text-xl font-bold text-yellow-400 mb-3">Popular Restaurants</h3>
+              <div class="space-y-3">
+                <div class="flex justify-between items-center bg-slate-800/50 p-3 rounded-lg">
+                  <div>
+                    <p class="font-medium text-white">Local Street Food</p>
+                    <span class="text-gray-400 text-sm">Traditional cuisine</span>
+                  </div>
+                  <span class="text-green-400 font-bold">$5-15</span>
+                </div>
+                <div class="flex justify-between items-center bg-slate-800/50 p-3 rounded-lg">
+                  <div>
+                    <p class="font-medium text-white">Mid-Range Restaurant</p>
+                    <span class="text-gray-400 text-sm">International menu</span>
+                  </div>
+                  <span class="text-green-400 font-bold">$20-40</span>
+                </div>
+                <div class="flex justify-between items-center bg-slate-800/50 p-3 rounded-lg">
+                  <div>
+                    <p class="font-medium text-white">Fine Dining</p>
+                    <span class="text-gray-400 text-sm">Gourmet experience</span>
+                  </div>
+                  <span class="text-green-400 font-bold">$80+</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('modal-container').innerHTML = modalHtml;
+    }
+    
+    function openAirlineModal(id) {
+      const airline = airlines.find(a => a.id === id);
+      if (!airline) return;
+      
+      const modalHtml = `
+        <div class="modal-overlay" onclick="closeModal(event)">
+          <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="relative">
+              <img src="${airline.image}" alt="${airline.name}" class="w-full h-64 object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1E3A5F, #3B82F6)'; this.alt='${airline.name}';">
+              <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-slate-900/80 rounded-full flex items-center justify-center hover:bg-slate-800 transition">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+              <div class="absolute bottom-4 left-4 flex items-center gap-3">
+                <span class="text-5xl">${airline.logo}</span>
+                <div>
+                  <h2 class="text-3xl font-bold text-white drop-shadow-lg">${airline.name}</h2>
+                  <p class="text-white/80">${airline.hub}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-6 scroll-container">
+              <div class="flex flex-wrap gap-3 mb-6">
+                <span class="${airline.allInclusive ? 'bg-green-500/30 text-green-300' : 'bg-blue-500/30 text-blue-300'} px-4 py-2 rounded-full font-medium">
+                  ${airline.allInclusive ? 'All-Inclusive' : 'Standard Service'}
+                </span>
+                <span class="${airline.type === 'Premium' ? 'bg-yellow-500/30 text-yellow-300' : 'bg-slate-500/30 text-slate-300'} px-4 py-2 rounded-full font-medium">
+                  ${airline.type}
+                </span>
+                <span class="star-rating text-lg">${'★'.repeat(airline.rating)}${'☆'.repeat(5-airline.rating)}</span>
+              </div>
+              
+              <h3 class="text-xl font-bold text-yellow-400 mb-3">About ${airline.name}</h3>
+              <p class="text-gray-300 mb-6 leading-relaxed">${airline.description}</p>
+              
+              <h3 class="text-xl font-bold text-yellow-400 mb-3">What's Included</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                ${airline.included.map(item => `
+                  <div class="flex items-center gap-2 bg-slate-800/50 p-3 rounded-lg">
+                    <span class="text-green-400">✓</span>
+                    <span class="text-gray-300">${item}</span>
+                  </div>
+                `).join('')}
+              </div>
+              
+              <div class="bg-gradient-to-r from-yellow-400/20 to-blue-400/20 p-4 rounded-xl border border-yellow-400/30">
+                <h4 class="font-bold text-yellow-400 mb-2">Rating Breakdown</h4>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-gray-400 text-sm">Comfort</p>
+                    <span class="text-yellow-400">${'★'.repeat(airline.rating)}${'☆'.repeat(5-airline.rating)}</span>
+                  </div>
+                  <div>
+                    <p class="text-gray-400 text-sm">Service</p>
+                    <span class="text-yellow-400">${'★'.repeat(airline.rating)}${'☆'.repeat(5-airline.rating)}</span>
+                  </div>
+                  <div>
+                    <p class="text-gray-400 text-sm">Food & Beverage</p>
+                    <span class="text-yellow-400">${'★'.repeat(Math.min(5, airline.rating))}${'☆'.repeat(5-Math.min(5, airline.rating))}</span>
+                  </div>
+                  <div>
+                    <p class="text-gray-400 text-sm">Entertainment</p>
+                    <span class="text-yellow-400">${'★'.repeat(Math.min(5, airline.rating))}${'☆'.repeat(5-Math.min(5, airline.rating))}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('modal-container').innerHTML = modalHtml;
+    }
+    
+    function openAttractionModal(id) {
+      const attr = attractions.find(a => a.id === id);
+      if (!attr) return;
+      
+      const modalHtml = `
+        <div class="modal-overlay" onclick="closeModal(event)">
+          <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="relative">
+              <img src="${attr.image}" alt="${attr.name}" class="w-full h-64 object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #F59E0B, #EF4444)'; this.alt='${attr.name}';">
+              <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-slate-900/80 rounded-full flex items-center justify-center hover:bg-slate-800 transition">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+              <div class="absolute bottom-4 left-4">
+                <h2 class="text-3xl font-bold text-white drop-shadow-lg">${attr.name}</h2>
+                <p class="text-white/80">${attr.location}</p>
+              </div>
+            </div>
+            
+            <div class="p-6 scroll-container">
+              <div class="flex flex-wrap gap-3 mb-6">
+                <span class="bg-green-500/30 text-green-300 px-4 py-2 rounded-full font-medium">Entry: ${attr.price}</span>
+                <span class="star-rating text-lg">${'★'.repeat(attr.rating)}${'☆'.repeat(5-attr.rating)}</span>
+              </div>
+              
+              <h3 class="text-xl font-bold text-yellow-400 mb-3">About This Attraction</h3>
+              <p class="text-gray-300 mb-6 leading-relaxed">${attr.description}</p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="bg-slate-800/50 p-4 rounded-xl">
+                  <h4 class="font-bold text-white mb-2">Best Time to Visit</h4>
+                  <p class="text-gray-400 text-sm">Early morning or late afternoon for fewer crowds and better photos</p>
+                </div>
+                <div class="bg-slate-800/50 p-4 rounded-xl">
+                  <h4 class="font-bold text-white mb-2">Duration</h4>
+                  <p class="text-gray-400 text-sm">Plan for 2-4 hours to fully experience this attraction</p>
+                </div>
+              </div>
+              
+              <h3 class="text-xl font-bold text-yellow-400 mb-3">Visitor Tips</h3>
+              <ul class="space-y-2 text-gray-300">
+                <li class="flex items-start gap-2">
+                  <span class="text-yellow-400">•</span>
+                  <span>Book tickets in advance during peak season</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-yellow-400">•</span>
+                  <span>Wear comfortable shoes for walking</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-yellow-400">•</span>
+                  <span>Bring water and sun protection</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-yellow-400">•</span>
+                  <span>Consider hiring a local guide for deeper insights</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('modal-container').innerHTML = modalHtml;
+    }
+    
+    function closeModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      document.getElementById('modal-container').innerHTML = '';
+    }
+    
+    // Close modal on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d608df4009368c7',t:'MTc3MjQ1NjExMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
